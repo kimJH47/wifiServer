@@ -36,6 +36,8 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     testImplementation 'org.assertj:assertj-core:3.24.2'
 
+    testImplementation group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+
 }
 
 test {
