@@ -11,7 +11,7 @@ public class WifiInfoDao {
     private static final String TABLE_NAME = "PUBLIC_WIFI_INFO";
     private static final int MAX_BATCH_CONTENT = 1000;
 
-    public void save(List<WifiInfoDto> publicWifiList) {
+    public long save(List<WifiInfoDto> publicWifiList) {
         Connection connection = ConnectionProvider.getConnection();
         List<String> queries = publicWifiList.stream()
                 .map(this::createInsertQuery)
@@ -25,7 +25,7 @@ public class WifiInfoDao {
                     statement.executeBatch();
                 }
             }
-            statement.executeBatch();
+            return statement.executeBatch().length;
         } catch (Exception e) {
             throw new IllegalStateException(e);
         } finally {
