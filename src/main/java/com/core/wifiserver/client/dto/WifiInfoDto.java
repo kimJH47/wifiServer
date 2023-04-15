@@ -18,9 +18,9 @@ public class WifiInfoDto {
     private String installFloor;
     private String installType;
     private String installMby;
-    private String cnstcYear;
     private String svcEc;
     private String cmcwr;
+    private String cnstcYear;
     private String inoutDoor;
     private String remars3;
     private String latitude; //위도
