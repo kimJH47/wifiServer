@@ -16,6 +16,10 @@ public class PublicApiResponseClient {
         return getResponseEntity(start, end);
     }
 
+    public int getApiTotalCount() {
+        return getResponseEntity(0, 1).getTotalCount();
+    }
+
     private ResponseEntity getResponseEntity(int start, int end) {
         try {
             OkHttpClient okHttpClient = new OkHttpClient();
