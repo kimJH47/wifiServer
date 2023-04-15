@@ -17,11 +17,10 @@ public class WifiInfoDeserializer implements JsonDeserializer<ResponseEntity> {
             throws JsonParseException {
         JsonObject responseBody = json.getAsJsonObject()
                 .getAsJsonObject("TbPublicWifiInfo");
-        JsonArray row = responseBody.get("row").getAsJsonArray();
         return new ResponseEntity(
                 responseBody.get("list_total_count").getAsInt(),
                 responseBody.get("RESULT").getAsJsonObject().get("CODE").getAsString(),
-                jsonArrayToDto(row)
+                jsonArrayToDto(responseBody.get("row").getAsJsonArray())
         );
     }
 
@@ -33,9 +32,3 @@ public class WifiInfoDeserializer implements JsonDeserializer<ResponseEntity> {
         return wifiInfoDtos;
     }
 }
-
-//
-//      "RESULT": {
-//              "CODE": "INFO-000",
-//              "MESSAGE": "정상 처리되었습니다"
-//              },
