@@ -1,6 +1,7 @@
 package com.core.wifiserver.dao;
 
 import com.core.wifiserver.client.dto.WifiInfoDto;
+import com.core.wifiserver.dao.queryfactory.QueryBuilderFactory;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.List;
@@ -12,21 +13,29 @@ public class WifiInfoDao {
     private static final int MAX_BATCH_CONTENT = 1000;
 
     public long save(List<WifiInfoDto> publicWifiList) {
-        Connection connection = ConnectionProvider.getConnection();
         List<String> queries = publicWifiList.stream()
                 .map(this::createInsertQuery)
                 .collect(Collectors.toList());
+
         //work batch
+        Connection connection = ConnectionProvider.getConnection();
+        ConnectionProvider.startTransaction(connection);
+
+        long insertRow = 0;
         try (Statement statement = connection.createStatement()) {
             for (int i = 0; i < queries.size(); i++) {
                 String query = queries.get(i);
                 statement.addBatch(query);
                 if (i % MAX_BATCH_CONTENT == 0) {
-                    statement.executeBatch();
+                    insertRow += statement.executeBatch().length;
+                    ConnectionProvider.commit(connection);
                 }
             }
-            return statement.executeBatch().length;
+            ConnectionProvider.endTransaction(connection);
+            insertRow += statement.executeBatch().length;
+            return insertRow;
         } catch (Exception e) {
+            ConnectionProvider.rollback(connection);
             throw new IllegalStateException(e);
         } finally {
             ConnectionProvider.close(connection);
