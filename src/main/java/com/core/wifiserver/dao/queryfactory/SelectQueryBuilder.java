@@ -25,6 +25,11 @@ public class SelectQueryBuilder {
         return this;
     }
 
+    public SelectQueryBuilder where(String where) {
+        this.where = where;
+        return this;
+    }
+
     public SelectQueryBuilder orderBy(String orderBy) {
         this.orderBy = orderBy;
         return this;

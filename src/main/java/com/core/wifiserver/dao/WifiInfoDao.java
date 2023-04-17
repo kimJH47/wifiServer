@@ -3,6 +3,8 @@ package com.core.wifiserver.dao;
 import com.core.wifiserver.client.dto.WifiInfoDto;
 import com.core.wifiserver.dao.queryfactory.QueryBuilderFactory;
 import com.core.wifiserver.dao.template.JdbcContext;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +15,7 @@ public class WifiInfoDao {
     private final JdbcContext jdbcContext;
 
     public WifiInfoDao() {
-        this.jdbcContext = new JdbcContext();
+        this.jdbcContext = JdbcContext.getInstance();
     }
 
     public long save(List<WifiInfoDto> publicWifiList) {
@@ -50,24 +52,7 @@ public class WifiInfoDao {
         return jdbcContext.select(createOrderByCoordinateWithPaginationQuery(latitude, longitude, page), resultSet -> {
             ArrayList<WifiInfoDto> wifiInfoDtos = new ArrayList<>();
             while (resultSet.next()) {
-                wifiInfoDtos.add(WifiInfoDto.builder()
-                        .mgrNo(resultSet.getString("MGR_NO"))
-                        .WRDOFC(resultSet.getString("WRDOFC"))
-                        .name(resultSet.getString("NAME"))
-                        .streetAddress(resultSet.getString("STREET_ADDRESS"))
-                        .detailAddress(resultSet.getString("DETAIL_ADDRESS"))
-                        .installFloor(resultSet.getString("INSTALL_FLOOR"))
-                        .installType(resultSet.getString("INSTALL_TYPE"))
-                        .installMby(resultSet.getString("INSTALL_MBY"))
-                        .svcEc(resultSet.getString("SVC_SE"))
-                        .cmcwr(resultSet.getString("CMCWR"))
-                        .cnstcYear(resultSet.getString("CNSTC_YEAR"))
-                        .inoutDoor(resultSet.getString("INOUT_DOOR"))
-                        .remars3(resultSet.getString("REMARS3"))
-                        .latitude(resultSet.getString("LAT"))
-                        .longitude(resultSet.getString("LNT"))
-                        .workDttm(resultSet.getString("WORK_DTTM"))
-                        .build());
+                wifiInfoDtos.add(getWifiInfoDto(resultSet));
             }
             return wifiInfoDtos;
         });
@@ -81,6 +66,34 @@ public class WifiInfoDao {
         return QueryBuilderFactory.createSelectQueryBuilder(TABLE_NAME)
                 .orderBy(orderBy)
                 .page(page.getPageSize(), page.getOffset())
+                .build();
+    }
+
+    public WifiInfoDto findOne(int id) {
+        String query = QueryBuilderFactory.createSelectQueryBuilder(TABLE_NAME)
+                .where(String.format("id = %d",id))
+                .build();
+        return jdbcContext.select(query, this::getWifiInfoDto);
+    }
+
+    private WifiInfoDto getWifiInfoDto(ResultSet resultSet) throws SQLException {
+        return WifiInfoDto.builder()
+                .mgrNo(resultSet.getString("MGR_NO"))
+                .WRDOFC(resultSet.getString("WRDOFC"))
+                .name(resultSet.getString("NAME"))
+                .streetAddress(resultSet.getString("STREET_ADDRESS"))
+                .detailAddress(resultSet.getString("DETAIL_ADDRESS"))
+                .installFloor(resultSet.getString("INSTALL_FLOOR"))
+                .installType(resultSet.getString("INSTALL_TYPE"))
+                .installMby(resultSet.getString("INSTALL_MBY"))
+                .svcEc(resultSet.getString("SVC_SE"))
+                .cmcwr(resultSet.getString("CMCWR"))
+                .cnstcYear(resultSet.getString("CNSTC_YEAR"))
+                .inoutDoor(resultSet.getString("INOUT_DOOR"))
+                .remars3(resultSet.getString("REMARS3"))
+                .latitude(resultSet.getString("LAT"))
+                .longitude(resultSet.getString("LNT"))
+                .workDttm(resultSet.getString("WORK_DTTM"))
                 .build();
     }
 }
