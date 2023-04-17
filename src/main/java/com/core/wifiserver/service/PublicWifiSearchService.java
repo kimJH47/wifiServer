@@ -3,9 +3,13 @@ package com.core.wifiserver.service;
 
 import com.core.wifiserver.client.PublicApiResponseClient;
 import com.core.wifiserver.client.dto.PublicApiConfig;
+import com.core.wifiserver.client.dto.WifiInfoDto;
 import com.core.wifiserver.dao.WifiInfoDao;
 import com.core.wifiserver.dto.StatusCode;
+import com.core.wifiserver.dto.request.Request;
+import com.core.wifiserver.dto.request.WifiSearchRequest;
 import com.core.wifiserver.dto.response.Response;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -28,11 +32,21 @@ public class PublicWifiSearchService {
                     .getWifiInfos());
 
             apiTotalCount -= maxResponseCount + 1;
-            last+= maxResponseCount + 1;
+            last += maxResponseCount + 1;
         }
         return Response.<Integer>builder()
                 .statusCode(StatusCode.SUCCESS)
                 .entity(insertRow)
+                .build();
+    }
+
+    public Response<List<WifiInfoDto>> findOrderByCoordinateWithPagination(Request<WifiSearchRequest> request) {
+        return Response.<List<WifiInfoDto>>builder()
+                .statusCode(StatusCode.SUCCESS)
+                .entity(wifiInfoDao.findOrderByCoordinateWithPagination(
+                        request.getEntity().getLatitude(),
+                        request.getEntity().getLongitude(),
+                        request.getEntity().getPage()))
                 .build();
     }
 }
