@@ -1,5 +1,6 @@
-package com.core.wifiserver.dto;
+package com.core.wifiserver.dto.response;
 
+import com.core.wifiserver.dto.StatusCode;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
