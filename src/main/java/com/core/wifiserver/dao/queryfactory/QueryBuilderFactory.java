@@ -9,4 +9,8 @@ public class QueryBuilderFactory {
         String insertBase = String.format("insert into %s", tableName);
         return new InsertQueryBuilder(insertBase);
     }
+
+    public static SelectQueryBuilder createSelectQueryBuilder(String tableName) {
+        return new SelectQueryBuilder(tableName);
+    }
 }
