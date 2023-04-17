@@ -21,7 +21,7 @@ public class InsertQueryBuilder {
         return new ValueBuilder(this);
     }
 
-    private InsertQueryBuilder addValue(String condition) {
+    private InsertQueryBuilder addValue(Object condition) {
         values.add(condition);
         return this;
     }
@@ -57,7 +57,7 @@ public class InsertQueryBuilder {
     public static class ValueBuilder {
         private final InsertQueryBuilder insertQueryBuilder;
 
-        public InsertQueryBuilder value(String condition) {
+        public InsertQueryBuilder value(Object condition) {
             return insertQueryBuilder.addValue(condition);
         }
     }
