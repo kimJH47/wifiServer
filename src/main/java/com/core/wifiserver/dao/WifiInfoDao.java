@@ -71,7 +71,7 @@ public class WifiInfoDao {
 
     public WifiInfoDto findOne(int id) {
         String query = QueryBuilderFactory.createSelectQueryBuilder(TABLE_NAME)
-                .where(String.format("id = %d",id))
+                .where(String.format("id = %d", id))
                 .build();
         return jdbcContext.select(query, this::getWifiInfoDto);
     }
