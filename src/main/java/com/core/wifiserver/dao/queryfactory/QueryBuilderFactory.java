@@ -13,4 +13,8 @@ public class QueryBuilderFactory {
     public static SelectQueryBuilder createSelectQueryBuilder(String tableName) {
         return new SelectQueryBuilder(tableName);
     }
+
+    public static DeleteQueryBuilder createDeleteQueryBuilder(String tableName) {
+        return new DeleteQueryBuilder(tableName);
+    }
 }
