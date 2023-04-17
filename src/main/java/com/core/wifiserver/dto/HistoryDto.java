@@ -2,8 +2,10 @@ package com.core.wifiserver.dto;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @AllArgsConstructor
+@Getter
 public class HistoryDto {
 
     private final int id;

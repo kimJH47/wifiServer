@@ -37,9 +37,9 @@ public class HistoryDao {
             while (resultSet.next()) {
                 historyDtos.add(new HistoryDto(
                         resultSet.getInt("id"),
-                        Double.parseDouble(resultSet.getString("id")),
-                        Double.parseDouble(resultSet.getString("id")),
-                        resultSet.getString("CREATE_TIME")
+                        Double.parseDouble(resultSet.getString("LATITUDE")),
+                        Double.parseDouble(resultSet.getString("LONGITUDE")),
+                        resultSet.getString("CREATE_DATE")
                 ));
             }
             return historyDtos;

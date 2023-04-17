@@ -4,6 +4,7 @@ public class DeleteQueryBuilder {
 
     private String tableName;
     private String where;
+
     public DeleteQueryBuilder(String tableName) {
         this.tableName = tableName;
     }
@@ -13,10 +14,12 @@ public class DeleteQueryBuilder {
         this.where = where;
         return this;
     }
+
     public String build() {
         if (where.isEmpty()) {
             throw new IllegalArgumentException("");
         }
-        return "DELETE FROM" + tableName + " " + where;
+        return "DELETE FROM " + tableName + " where " + where;
     }
+
 }
