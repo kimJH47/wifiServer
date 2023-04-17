@@ -9,7 +9,7 @@ import java.util.List;
 public class JdbcContext {
     static JdbcContext jdbcContext;
 
-    private JdbcContext(){
+    private JdbcContext() {
 
     }
 
@@ -20,6 +20,7 @@ public class JdbcContext {
         jdbcContext = new JdbcContext();
         return jdbcContext;
     }
+
     public long insertBulk(List<String> queries) {
         return workWithStatementBatchStrategy(c -> {
             Statement statement = c.createStatement();
@@ -31,6 +32,10 @@ public class JdbcContext {
     }
 
     public int insert(String query) {
+        return workWithStatementStrategy(query, Connection::createStatement);
+    }
+
+    public int delete(String query) {
         return workWithStatementStrategy(query, Connection::createStatement);
     }
 
