@@ -16,4 +16,9 @@ public class HistoryService {
                 historyRequestRequest.getEntity().getLongitude());
     }
 
+    public int delete(int id) {
+        return historyDao.delete(id);
+    }
+
+
 }
