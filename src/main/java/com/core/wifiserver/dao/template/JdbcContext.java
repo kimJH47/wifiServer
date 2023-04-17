@@ -19,18 +19,34 @@ public class JdbcContext {
     }
 
     private long workWithStatementBatchStrategy(StatementStrategy statementStrategy) {
-        Connection c = ConnectionProvider.getConnection();
-        ConnectionProvider.startTransaction(c);
-        try (Statement stmt = statementStrategy.makeStatement(c)) {
+        Connection connection = ConnectionProvider.getConnection();
+        ConnectionProvider.startTransaction(connection);
+        try (Statement stmt = statementStrategy.makeStatement(connection)) {
             int insertLow = stmt.executeBatch().length;
-            ConnectionProvider.endTransaction(c);
+            ConnectionProvider.endTransaction(connection);
             return insertLow;
 
         } catch (SQLException e) {
-            ConnectionProvider.rollback(c);
+            ConnectionProvider.rollback(connection);
             throw new IllegalStateException(e);
         } finally {
-            ConnectionProvider.close(c);
+            ConnectionProvider.close(connection);
+        }
+    }
+
+    public <T> T select(String query, LowMapper<T> lowMapper) {
+        return workWithStatementStrategy(Connection::createStatement, query, lowMapper);
+    }
+
+    public <T> T workWithStatementStrategy(StatementStrategy statementStrategy, String query, LowMapper<T> lowMapper) {
+        Connection connection = ConnectionProvider.getConnection();
+        try {
+            Statement statement = statementStrategy.makeStatement(connection);
+            return lowMapper.mapRow(statement.executeQuery(query));
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        } finally {
+            ConnectionProvider.close(connection);
         }
     }
 }
