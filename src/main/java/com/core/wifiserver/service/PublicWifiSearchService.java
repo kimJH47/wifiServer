@@ -49,4 +49,11 @@ public class PublicWifiSearchService {
                         request.getEntity().getPage()))
                 .build();
     }
+
+    public Response<WifiInfoDto> findOne(int id) {
+        return Response.<WifiInfoDto>builder()
+                .statusCode(StatusCode.SUCCESS)
+                .entity(wifiInfoDao.findOne(id))
+                .build();
+    }
 }
