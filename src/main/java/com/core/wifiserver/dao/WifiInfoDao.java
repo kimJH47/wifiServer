@@ -2,44 +2,24 @@ package com.core.wifiserver.dao;
 
 import com.core.wifiserver.client.dto.WifiInfoDto;
 import com.core.wifiserver.dao.queryfactory.QueryBuilderFactory;
-import java.sql.Connection;
-import java.sql.Statement;
+import com.core.wifiserver.dao.template.JdbcContext;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class WifiInfoDao {
 
     private static final String TABLE_NAME = "PUBLIC_WIFI_INFO";
-    private static final int MAX_BATCH_CONTENT = 1000;
+    private final JdbcContext jdbcContext;
+
+    public WifiInfoDao() {
+        this.jdbcContext = new JdbcContext();
+    }
 
     public long save(List<WifiInfoDto> publicWifiList) {
-        List<String> queries = publicWifiList.stream()
-                .map(this::createInsertQuery)
-                .collect(Collectors.toList());
-
         //work batch
-        Connection connection = ConnectionProvider.getConnection();
-        ConnectionProvider.startTransaction(connection);
-
-        long insertRow = 0;
-        try (Statement statement = connection.createStatement()) {
-            for (int i = 0; i < queries.size(); i++) {
-                String query = queries.get(i);
-                statement.addBatch(query);
-                if (i % MAX_BATCH_CONTENT == 0) {
-                    insertRow += statement.executeBatch().length;
-                    ConnectionProvider.commit(connection);
-                }
-            }
-            ConnectionProvider.endTransaction(connection);
-            insertRow += statement.executeBatch().length;
-            return insertRow;
-        } catch (Exception e) {
-            ConnectionProvider.rollback(connection);
-            throw new IllegalStateException(e);
-        } finally {
-            ConnectionProvider.close(connection);
-        }
+        return jdbcContext.insertBulk(publicWifiList.stream()
+                .map(this::createInsertQuery)
+                .collect(Collectors.toList()));
     }
 
     //dto 로 넘길까 고민
