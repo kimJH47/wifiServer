@@ -2,7 +2,10 @@ package com.core.wifiserver.dao;
 
 import com.core.wifiserver.dao.queryfactory.QueryBuilderFactory;
 import com.core.wifiserver.dao.template.JdbcContext;
+import com.core.wifiserver.dto.HistoryDto;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HistoryDao {
     private final JdbcContext jdbcContext;
@@ -24,5 +27,22 @@ public class HistoryDao {
         return jdbcContext.delete(QueryBuilderFactory.createDeleteQueryBuilder(TABLE_NAME)
                 .where(String.format("id = %d", id))
                 .build());
+    }
+
+    public List<HistoryDto> findAll() {
+        String query = QueryBuilderFactory.createSelectQueryBuilder(TABLE_NAME)
+                .build();
+        return jdbcContext.select(query, resultSet -> {
+            ArrayList<HistoryDto> historyDtos = new ArrayList<>();
+            while (resultSet.next()) {
+                historyDtos.add(new HistoryDto(
+                        resultSet.getInt("id"),
+                        Double.parseDouble(resultSet.getString("id")),
+                        Double.parseDouble(resultSet.getString("id")),
+                        resultSet.getString("CREATE_TIME")
+                ));
+            }
+            return historyDtos;
+        });
     }
 }
