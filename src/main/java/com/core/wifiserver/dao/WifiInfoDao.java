@@ -3,6 +3,7 @@ package com.core.wifiserver.dao;
 import com.core.wifiserver.client.dto.WifiInfoDto;
 import com.core.wifiserver.dao.queryfactory.QueryBuilderFactory;
 import com.core.wifiserver.dao.template.JdbcContext;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +42,45 @@ public class WifiInfoDao {
                 .addColumn("LAT").value(wifiInfoDto.getLatitude())
                 .addColumn("LNT").value(wifiInfoDto.getLongitude())
                 .addColumn("WORK_DTTM").value(wifiInfoDto.getWorkDttm())
+                .build();
+    }
+
+
+    public List<WifiInfoDto> findOrderByCoordinateWithPagination(double latitude, double longitude, Page page) {
+        return jdbcContext.select(createOrderByCoordinateWithPaginationQuery(latitude, longitude, page), resultSet -> {
+            ArrayList<WifiInfoDto> wifiInfoDtos = new ArrayList<>();
+            while (resultSet.next()) {
+                wifiInfoDtos.add(WifiInfoDto.builder()
+                        .mgrNo(resultSet.getString("MGR_NO"))
+                        .WRDOFC(resultSet.getString("WRDOFC"))
+                        .name(resultSet.getString("NAME"))
+                        .streetAddress(resultSet.getString("STREET_ADDRESS"))
+                        .detailAddress(resultSet.getString("DETAIL_ADDRESS"))
+                        .installFloor(resultSet.getString("INSTALL_FLOOR"))
+                        .installType(resultSet.getString("INSTALL_TYPE"))
+                        .installMby(resultSet.getString("INSTALL_MBY"))
+                        .svcEc(resultSet.getString("SVC_SE"))
+                        .cmcwr(resultSet.getString("CMCWR"))
+                        .cnstcYear(resultSet.getString("CNSTC_YEAR"))
+                        .inoutDoor(resultSet.getString("INOUT_DOOR"))
+                        .remars3(resultSet.getString("REMARS3"))
+                        .latitude(resultSet.getString("LAT"))
+                        .longitude(resultSet.getString("LNT"))
+                        .workDttm(resultSet.getString("WORK_DTTM"))
+                        .build());
+            }
+            return wifiInfoDtos;
+        });
+    }
+
+    private String createOrderByCoordinateWithPaginationQuery(double latitude, double longitude, Page page) {
+        String orderBy = String.format(
+                "ABS(LAT - %f) * ABS(LAT - %f) + ABS(LNT - %f) * ABS(LNT - %f)",
+                latitude, latitude,
+                longitude, longitude);
+        return QueryBuilderFactory.createSelectQueryBuilder(TABLE_NAME)
+                .orderBy(orderBy)
+                .page(page.getPageSize(), page.getOffset())
                 .build();
     }
 }
