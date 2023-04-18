@@ -31,19 +31,19 @@ public class BookmarkGroupService {
     }
 
     public Response<Integer> delete(int id) {
-        return Response.<Integer>builder().
-                statusCode(StatusCode.SUCCESS).
-                entity(bookmarkGroupDao.delete(id)).
-                build();
+        return Response.<Integer>builder()
+                .statusCode(StatusCode.SUCCESS)
+                .entity(bookmarkGroupDao.delete(id))
+                .build();
     }
 
     public Response<Integer> update(Request<BookmarkGroupDto> bookmarkGroupRequest) {
         BookmarkGroupDto entity = bookmarkGroupRequest.getEntity();
-        return Response.<Integer>builder().
-                statusCode(StatusCode.SUCCESS).
-                entity(bookmarkGroupDao.update(entity.getId(),
+        return Response.<Integer>builder()
+                .statusCode(StatusCode.SUCCESS)
+                .entity(bookmarkGroupDao.update(entity.getId(),
                         entity.getOrder(),
-                        entity.getName())).
-                build();
+                        entity.getName()))
+                .build();
     }
 }

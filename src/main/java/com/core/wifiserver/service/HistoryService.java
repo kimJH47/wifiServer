@@ -16,7 +16,7 @@ public class HistoryService {
     }
 
     public Response<?> save(Request<HistoryRequest> historyRequestRequest) {
-        return  Response.builder()
+        return Response.builder()
                 .statusCode(StatusCode.SUCCESS)
                 .entity(historyDao.save(historyRequestRequest.getEntity().getLatitude(),
                         historyRequestRequest.getEntity().getLongitude()))
@@ -25,16 +25,16 @@ public class HistoryService {
     }
 
     public Response<Integer> delete(int id) {
-        return Response.<Integer>builder().
-                statusCode(StatusCode.SUCCESS).
-                entity(historyDao.delete(id)).
-                build();
+        return Response.<Integer>builder()
+                .statusCode(StatusCode.SUCCESS)
+                .entity(historyDao.delete(id))
+                .build();
     }
 
     public Response<List<HistoryDto>> findAll() {
-        return Response.<List<HistoryDto>>builder().
-                statusCode(StatusCode.SUCCESS).
-                entity(historyDao.findAll()).
-                build();
+        return Response.<List<HistoryDto>>builder()
+                .statusCode(StatusCode.SUCCESS)
+                .entity(historyDao.findAll())
+                .build();
     }
 }
