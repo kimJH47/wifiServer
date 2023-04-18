@@ -5,6 +5,7 @@ import com.core.wifiserver.dto.BookmarkListDto;
 import com.core.wifiserver.dto.StatusCode;
 import com.core.wifiserver.dto.request.Request;
 import com.core.wifiserver.dto.response.Response;
+import java.util.List;
 
 public class BookmarkListService {
     private final BookmarkListDao bookmarkListDao;
@@ -23,4 +24,19 @@ public class BookmarkListService {
                 ))
                 .build();
     }
+
+    public Response<Integer> delete(int id) {
+        return Response.<Integer>builder()
+                .statusCode(StatusCode.SUCCESS)
+                .entity(bookmarkListDao.delete(id))
+                .build();
+    }
+
+    public Response<List<BookmarkListDto>> findAll() {
+        return Response.<List<BookmarkListDto>>builder()
+                .statusCode(StatusCode.SUCCESS)
+                .entity(bookmarkListDao.findAll())
+                .build();
+    }
+
 }
