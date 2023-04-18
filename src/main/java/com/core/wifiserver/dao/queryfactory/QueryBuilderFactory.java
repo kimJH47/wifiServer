@@ -17,4 +17,8 @@ public class QueryBuilderFactory {
     public static DeleteQueryBuilder createDeleteQueryBuilder(String tableName) {
         return new DeleteQueryBuilder(tableName);
     }
+
+    public static UpdateQueryBuilder createUpdateQueryBuilder(String tableName) {
+        return new UpdateQueryBuilder(tableName);
+    }
 }
