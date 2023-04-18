@@ -23,14 +23,14 @@ public class BookmarkGroupDao {
                 .addColumn("create_date").value(LocalDateTime.now().toString())
                 .addColumn("modified_date").value("")
                 .build();
-        return jdbcContext.insert(query);
+        return jdbcContext.executeSQL(query);
     }
 
     public int delete(int id) {
         String query = QueryBuilderFactory.createDeleteQueryBuilder(TABLE_NAME)
                 .where(String.format("id = %d", id))
                 .build();
-        return jdbcContext.insert(query);
+        return jdbcContext.executeSQL(query);
     }
 
     public List<BookmarkGroupDto> findAll() {
@@ -58,7 +58,7 @@ public class BookmarkGroupDao {
                 .addColumn("modified_date").value(LocalDateTime.now().toString())
                 .where(String.format("id = %d", id))
                 .build();
-        return jdbcContext.update(query);
+        return jdbcContext.executeSQL(query);
     }
 
 }

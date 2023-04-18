@@ -16,7 +16,7 @@ public class HistoryDao {
     }
 
     public int save(double latitude, double longitude) {
-        return jdbcContext.insert(QueryBuilderFactory.createInsertQueryBuilder(TABLE_NAME)
+        return jdbcContext.executeSQL(QueryBuilderFactory.createInsertQueryBuilder(TABLE_NAME)
                 .addColumn("latitude").value(String.valueOf(latitude))
                 .addColumn("longitude").value(String.valueOf(longitude))
                 .addColumn("create_date").value(LocalDateTime.now().toString())
@@ -24,7 +24,7 @@ public class HistoryDao {
     }
 
     public int delete(int id) {
-        return jdbcContext.delete(QueryBuilderFactory.createDeleteQueryBuilder(TABLE_NAME)
+        return jdbcContext.executeSQL(QueryBuilderFactory.createDeleteQueryBuilder(TABLE_NAME)
                 .where(String.format("id = %d", id))
                 .build());
     }

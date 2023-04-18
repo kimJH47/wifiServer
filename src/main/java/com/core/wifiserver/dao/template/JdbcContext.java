@@ -31,15 +31,7 @@ public class JdbcContext {
         });
     }
 
-    public int insert(String query) {
-        return workWithStatementStrategy(query, Connection::createStatement);
-    }
-
-    public int delete(String query) {
-        return workWithStatementStrategy(query, Connection::createStatement);
-    }
-
-    public int update(String query) {
+    public int executeSQL(String query) {
         return workWithStatementStrategy(query, Connection::createStatement);
     }
 
