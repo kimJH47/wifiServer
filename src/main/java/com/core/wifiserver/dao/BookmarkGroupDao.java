@@ -21,6 +21,7 @@ public class BookmarkGroupDao {
                 .addColumn("name").value(name)
                 .addColumn("order").value(order)
                 .addColumn("create_date").value(LocalDateTime.now().toString())
+                .addColumn("modified_date").value("")
                 .build();
         return jdbcContext.insert(query);
     }
@@ -41,6 +42,7 @@ public class BookmarkGroupDao {
                 bookmarkGroupDtos.add(new BookmarkGroupDto(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
+                        resultSet.getInt("order"),
                         resultSet.getString("create_date"),
                         resultSet.getString("modified_date")
                 ));
