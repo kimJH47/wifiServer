@@ -48,4 +48,15 @@ public class BookmarkGroupDao {
             return bookmarkGroupDtos;
         });
     }
+
+    public int update(int id, int order, String name) {
+        String query = QueryBuilderFactory.createUpdateQueryBuilder(TABLE_NAME)
+                .addColumn("order").value(order)
+                .addColumn("name").value(name)
+                .addColumn("modified_date").value(LocalDateTime.now().toString())
+                .where(String.format("id = %d", id))
+                .build();
+        return jdbcContext.update(query);
+    }
+
 }
