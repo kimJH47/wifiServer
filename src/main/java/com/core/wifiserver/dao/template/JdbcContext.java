@@ -39,6 +39,10 @@ public class JdbcContext {
         return workWithStatementStrategy(query, Connection::createStatement);
     }
 
+    public int update(String query) {
+        return workWithStatementStrategy(query, Connection::createStatement);
+    }
+
     private int workWithStatementStrategy(String query, StatementStrategy statementStrategy) {
         Connection connection = ConnectionProvider.getConnection();
         try (Statement stmt = statementStrategy.makeStatement(connection)) {
