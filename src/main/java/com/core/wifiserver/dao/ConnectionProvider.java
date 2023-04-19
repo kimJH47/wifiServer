@@ -1,19 +1,32 @@
 package com.core.wifiserver.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 
 public class ConnectionProvider {
 
-    private static final String dbUrl = "jdbc:sqlite:test.db";
+    static DataSource dataSource;
 
     private ConnectionProvider() {
     }
 
+    static {
+        try {
+            Context context = new InitialContext();
+            dataSource = (DataSource) context.lookup("java:comp/env/jdbc/SQLiteDB");
+            Class.forName("org.sqlite.JDBC");
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
     public static Connection getConnection() {
         try {
-            return DriverManager.getConnection(dbUrl);
+
+            return dataSource.getConnection();
 
         } catch (SQLException e) {
             throw new IllegalStateException("", e);
