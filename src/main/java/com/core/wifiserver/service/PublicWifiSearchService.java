@@ -3,9 +3,9 @@ package com.core.wifiserver.service;
 
 import com.core.wifiserver.client.PublicApiResponseClient;
 import com.core.wifiserver.client.dto.PublicApiConfig;
-import com.core.wifiserver.client.dto.WifiInfoDto;
 import com.core.wifiserver.dao.WifiInfoDao;
 import com.core.wifiserver.dto.StatusCode;
+import com.core.wifiserver.dto.WifiDto;
 import com.core.wifiserver.dto.request.Request;
 import com.core.wifiserver.dto.request.WifiSearchRequest;
 import com.core.wifiserver.dto.response.Response;
@@ -31,7 +31,7 @@ public class PublicWifiSearchService {
             insertRow += wifiInfoDao.save(client.getPublicWifiList(last, last + maxResponseCount)
                     .getWifiInfos());
 
-            apiTotalCount -= maxResponseCount + 1;
+            apiTotalCount -= maxResponseCount;
             last += maxResponseCount + 1;
         }
         return Response.<Integer>builder()
@@ -40,8 +40,8 @@ public class PublicWifiSearchService {
                 .build();
     }
 
-    public Response<List<WifiInfoDto>> findOrderByCoordinateWithPagination(Request<WifiSearchRequest> request) {
-        return Response.<List<WifiInfoDto>>builder()
+    public Response<List<WifiDto>> findOrderByCoordinateWithPagination(Request<WifiSearchRequest> request) {
+        return Response.<List<WifiDto>>builder()
                 .statusCode(StatusCode.SUCCESS)
                 .entity(wifiInfoDao.findOrderByCoordinateWithPagination(
                         request.getEntity().getLatitude(),
@@ -50,10 +50,10 @@ public class PublicWifiSearchService {
                 .build();
     }
 
-    public Response<WifiInfoDto> findOne(int id) {
-        return Response.<WifiInfoDto>builder()
+    public Response<WifiDto> findOne(String mgrNo, double latitude, double longitude) {
+        return Response.<WifiDto>builder()
                 .statusCode(StatusCode.SUCCESS)
-                .entity(wifiInfoDao.findOne(id))
+                .entity(wifiInfoDao.findOne(mgrNo, latitude, longitude))
                 .build();
     }
 }
