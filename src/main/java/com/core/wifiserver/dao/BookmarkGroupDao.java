@@ -60,5 +60,4 @@ public class BookmarkGroupDao {
                 .build();
         return jdbcContext.executeSQL(query);
     }
-
 }
