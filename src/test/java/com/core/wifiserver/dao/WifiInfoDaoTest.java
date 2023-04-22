@@ -8,7 +8,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 
-import com.core.wifiserver.client.dto.WifiInfoDto;
+import com.core.wifiserver.client.dto.clientResponseDto;
 import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,20 +21,19 @@ class WifiInfoDaoTest {
     @DisplayName("PublicWifiDto 의 데이터를 PUBLIC_WIFI_INFO 테이블에 저장하여야한다.")
     void save() throws Exception {
         //given
-        ArrayList<WifiInfoDto> wifiInfoDtos = new ArrayList<>();
-        wifiInfoDtos.add(createDto());
+        ArrayList<clientResponseDto> clientResponseDtos = new ArrayList<>();
+        clientResponseDtos.add(createDto());
         long expected = 1L;
         given(wifiInfoDao.save(any())).willReturn(expected);
         //when
-        long actual = wifiInfoDao.save(wifiInfoDtos);
+        long actual = wifiInfoDao.save(clientResponseDtos);
         //then
         then(wifiInfoDao).should(times(1)).save(any());
         assertThat(actual).isEqualTo(expected);
-
     }
 
-    private WifiInfoDto createDto() {
-        return new WifiInfoDto(
+    private clientResponseDto createDto() {
+        return new clientResponseDto(
                 "---GR00000",
                 "구로구",
                 "안양천공원",
@@ -53,5 +52,4 @@ class WifiInfoDaoTest {
                 "2023-04-15 10:58:19.0"
         );
     }
-
 }

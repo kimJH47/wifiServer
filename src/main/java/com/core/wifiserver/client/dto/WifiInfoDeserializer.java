@@ -24,11 +24,11 @@ public class WifiInfoDeserializer implements JsonDeserializer<ResponseEntity> {
         );
     }
 
-    private List<WifiInfoDto> jsonArrayToDto(JsonArray jsonArray) {
-        ArrayList<WifiInfoDto> wifiInfoDtos = new ArrayList<>();
+    private List<clientResponseDto> jsonArrayToDto(JsonArray jsonArray) {
+        ArrayList<clientResponseDto> clientResponseDtos = new ArrayList<>();
         for (JsonElement jsonElement : jsonArray) {
-            wifiInfoDtos.add(WifiInfoDto.create(jsonElement.getAsJsonObject()));
+            clientResponseDtos.add(clientResponseDto.create(jsonElement.getAsJsonObject()));
         }
-        return wifiInfoDtos;
+        return clientResponseDtos;
     }
 }

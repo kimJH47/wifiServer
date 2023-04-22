@@ -9,7 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 @Builder
-public class WifiInfoDto {
+public class clientResponseDto {
     private String mgrNo;
     private String WRDOFC;
     private String name;
@@ -27,9 +27,9 @@ public class WifiInfoDto {
     private String longitude; //경도
     private String workDttm;
 
-    public static WifiInfoDto create(JsonObject jsonObject) {
-        return WifiInfoDto.builder().
-                mgrNo(jsonObject.get("X_SWIFI_MGR_NO").getAsString())
+    public static clientResponseDto create(JsonObject jsonObject) {
+        return clientResponseDto.builder()
+                .mgrNo(jsonObject.get("X_SWIFI_MGR_NO").getAsString())
                 .WRDOFC(jsonObject.get("X_SWIFI_WRDOFC").getAsString())
                 .name(jsonObject.get("X_SWIFI_MAIN_NM").getAsString())
                 .streetAddress(jsonObject.get("X_SWIFI_ADRES1").getAsString())

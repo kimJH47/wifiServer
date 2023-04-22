@@ -11,5 +11,5 @@ import lombok.Getter;
 public class ResponseEntity {
     private Integer totalCount;
     private String resultCode;
-    private List<WifiInfoDto> wifiInfos;
+    private List<clientResponseDto> wifiInfos;
 }

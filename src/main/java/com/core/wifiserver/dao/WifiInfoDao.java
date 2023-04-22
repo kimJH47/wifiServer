@@ -1,8 +1,9 @@
 package com.core.wifiserver.dao;
 
-import com.core.wifiserver.client.dto.WifiInfoDto;
+import com.core.wifiserver.client.dto.clientResponseDto;
 import com.core.wifiserver.dao.queryfactory.QueryBuilderFactory;
 import com.core.wifiserver.dao.template.JdbcContext;
+import com.core.wifiserver.dto.WifiDto;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class WifiInfoDao {
         this.jdbcContext = JdbcContext.getInstance();
     }
 
-    public long save(List<WifiInfoDto> publicWifiList) {
+    public long save(List<clientResponseDto> publicWifiList) {
         //work batch
         return jdbcContext.insertBulk(publicWifiList.stream()
                 .map(this::createInsertQuery)
@@ -26,58 +27,65 @@ public class WifiInfoDao {
     }
 
     //dto 로 넘길까 고민
-    private String createInsertQuery(WifiInfoDto wifiInfoDto) {
+    private String createInsertQuery(clientResponseDto clientResponseDto) {
         return QueryBuilderFactory.createInsertQueryBuilder(TABLE_NAME)
-                .addColumn("MGR_NO").value(wifiInfoDto.getMgrNo())
-                .addColumn("WRDOFC").value(wifiInfoDto.getWRDOFC())
-                .addColumn("NAME").value(wifiInfoDto.getName())
-                .addColumn("STREET_ADDRESS").value(wifiInfoDto.getStreetAddress())
-                .addColumn("DETAIL_ADDRESS").value(wifiInfoDto.getDetailAddress())
-                .addColumn("INSTALL_FLOOR").value(wifiInfoDto.getInstallFloor())
-                .addColumn("INSTALL_TYPE").value(wifiInfoDto.getInstallType())
-                .addColumn("INSTALL_MBY").value(wifiInfoDto.getInstallMby())
-                .addColumn("SVC_SE").value(wifiInfoDto.getSvcEc())
-                .addColumn("CMCWR").value(wifiInfoDto.getCmcwr())
-                .addColumn("CNSTC_YEAR").value(wifiInfoDto.getCnstcYear())
-                .addColumn("INOUT_DOOR").value(wifiInfoDto.getInoutDoor())
-                .addColumn("REMARS3").value(wifiInfoDto.getRemars3())
-                .addColumn("LAT").value(wifiInfoDto.getLatitude())
-                .addColumn("LNT").value(wifiInfoDto.getLongitude())
-                .addColumn("WORK_DTTM").value(wifiInfoDto.getWorkDttm())
+                .addColumn("MGR_NO").value(clientResponseDto.getMgrNo())
+                .addColumn("WRDOFC").value(clientResponseDto.getWRDOFC())
+                .addColumn("NAME").value(clientResponseDto.getName())
+                .addColumn("STREET_ADDRESS").value(clientResponseDto.getStreetAddress())
+                .addColumn("DETAIL_ADDRESS").value(clientResponseDto.getDetailAddress())
+                .addColumn("INSTALL_FLOOR").value(clientResponseDto.getInstallFloor())
+                .addColumn("INSTALL_TYPE").value(clientResponseDto.getInstallType())
+                .addColumn("INSTALL_MBY").value(clientResponseDto.getInstallMby())
+                .addColumn("SVC_SE").value(clientResponseDto.getSvcEc())
+                .addColumn("CMCWR").value(clientResponseDto.getCmcwr())
+                .addColumn("CNSTC_YEAR").value(clientResponseDto.getCnstcYear())
+                .addColumn("INOUT_DOOR").value(clientResponseDto.getInoutDoor())
+                .addColumn("REMARS3").value(clientResponseDto.getRemars3())
+                .addColumn("LAT").value(clientResponseDto.getLatitude())
+                .addColumn("LNT").value(clientResponseDto.getLongitude())
+                .addColumn("WORK_DTTM").value(clientResponseDto.getWorkDttm())
                 .build();
     }
 
 
-    public List<WifiInfoDto> findOrderByCoordinateWithPagination(double latitude, double longitude, Page page) {
+    public List<WifiDto> findOrderByCoordinateWithPagination(double latitude, double longitude, Page page) {
         return jdbcContext.select(createOrderByCoordinateWithPaginationQuery(latitude, longitude, page), resultSet -> {
-            ArrayList<WifiInfoDto> wifiInfoDtos = new ArrayList<>();
+            ArrayList<WifiDto> wifiResponseDtos = new ArrayList<>();
             while (resultSet.next()) {
-                wifiInfoDtos.add(getWifiInfoDto(resultSet));
+                wifiResponseDtos.add(getWifiInfoDto(resultSet));
             }
-            return wifiInfoDtos;
+            return wifiResponseDtos;
         });
     }
 
     private String createOrderByCoordinateWithPaginationQuery(double latitude, double longitude, Page page) {
-        String orderBy = String.format(
-                "ABS(LAT - %f) * ABS(LAT - %f) + ABS(LNT - %f) * ABS(LNT - %f)",
+        String distance = String.format(
+                "(ABS(LAT - %f) * ABS(LAT - %f) + ABS(LNT - %f) * ABS(LNT - %f)) as DISTANCE",
                 latitude, latitude,
                 longitude, longitude);
         return QueryBuilderFactory.createSelectQueryBuilder(TABLE_NAME)
-                .orderBy(orderBy)
+                .columns("*", distance)
+                .orderBy("DISTANCE")
                 .page(page.getPageSize(), page.getOffset())
                 .build();
     }
 
-    public WifiInfoDto findOne(int id) {
+    public WifiDto findOne(String mgrNo, double latitude, double longitude) {
+        String distance = String.format(
+                "(ABS(LAT - %f) * ABS(LAT - %f) + ABS(LNT - %f) * ABS(LNT - %f)) as DISTANCE",
+                latitude, latitude,
+                longitude, longitude);
         String query = QueryBuilderFactory.createSelectQueryBuilder(TABLE_NAME)
-                .where(String.format("id = %d", id))
+                .columns("*", distance)
+                .where(String.format("mgrNo = '%s'", mgrNo))
                 .build();
         return jdbcContext.select(query, this::getWifiInfoDto);
     }
 
-    private WifiInfoDto getWifiInfoDto(ResultSet resultSet) throws SQLException {
-        return WifiInfoDto.builder()
+    private WifiDto getWifiInfoDto(ResultSet resultSet) throws SQLException {
+        return WifiDto.builder()
+                .distance(resultSet.getDouble("DISTANCE"))
                 .mgrNo(resultSet.getString("MGR_NO"))
                 .WRDOFC(resultSet.getString("WRDOFC"))
                 .name(resultSet.getString("NAME"))
@@ -96,4 +104,5 @@ public class WifiInfoDao {
                 .workDttm(resultSet.getString("WORK_DTTM"))
                 .build();
     }
+
 }
