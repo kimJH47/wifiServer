@@ -6,13 +6,11 @@ import com.core.wifiserver.dto.StatusCode;
 import com.core.wifiserver.dto.request.Request;
 import com.core.wifiserver.dto.response.Response;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class BookmarkGroupService {
     private final BookmarkGroupDao bookmarkGroupDao;
-
-    public BookmarkGroupService() {
-        this.bookmarkGroupDao = new BookmarkGroupDao();
-    }
 
     public Response<Integer> save(Request<BookmarkGroupDto> bookmarkGroupRequest) {
         return Response.<Integer>builder()

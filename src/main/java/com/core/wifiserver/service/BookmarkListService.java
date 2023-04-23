@@ -6,13 +6,12 @@ import com.core.wifiserver.dto.StatusCode;
 import com.core.wifiserver.dto.request.Request;
 import com.core.wifiserver.dto.response.Response;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 
+
+@RequiredArgsConstructor
 public class BookmarkListService {
     private final BookmarkListDao bookmarkListDao;
-
-    public BookmarkListService() {
-        bookmarkListDao = new BookmarkListDao();
-    }
 
     public Response<Integer> save(Request<BookmarkListDto> request) {
         BookmarkListDto entity = request.getEntity();
