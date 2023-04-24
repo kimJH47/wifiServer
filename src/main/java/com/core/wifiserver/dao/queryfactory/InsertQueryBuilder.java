@@ -38,19 +38,20 @@ public class InsertQueryBuilder {
 
         for (int i = 0; i < values.size(); i++) {
             Object value = values.get(i);
-            if (value instanceof Integer) {
-                queryBuilder.append(values);
-                continue;
-            }
-            queryBuilder.append("\"")
-                    .append(value)
-                    .append("\"");
+            queryBuilder.append(create(value));
             if (i < values.size() - 1) {
                 queryBuilder.append(",");
             }
         }
         queryBuilder.append(")");
         return queryBuilder.toString();
+    }
+
+    private String create(Object value) {
+        if (value instanceof Integer) {
+            return value.toString();
+        }
+        return String.format("'%s'", value);
     }
 
     @RequiredArgsConstructor

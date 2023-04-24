@@ -51,9 +51,12 @@ public class UpdateQueryBuilder {
             if (i < values.size() - 1) {
                 setBuilder.append(",");
             }
+            if (where.isEmpty()) {
+                return "UPDATE " + tableName + " SET " + setBuilder;
+            }
 
         }
-        return "UPDATE " + tableName + " SET " + setBuilder + " " + where;
+        return "UPDATE " + tableName + " SET " + setBuilder + "where " + where;
     }
 
     @RequiredArgsConstructor
