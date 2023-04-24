@@ -41,7 +41,7 @@ create table BOOKMARK_GROUP
 (
     ID            integer not null constraint ID primary key autoincrement,
     NAME          TEXT,
-    "ORDER"       integer,
+    ORDERS       integer,
     CREATE_DATE   TEXT,
     MODIFIED_DATE TEXT
 );
