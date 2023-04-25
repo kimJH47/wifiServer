@@ -51,7 +51,7 @@ public class InsertQueryBuilder {
         if (value instanceof Integer) {
             return value.toString();
         }
-        return String.format("'%s'", value);
+        return String.format("\"%s\"", value);
     }
 
     @RequiredArgsConstructor
