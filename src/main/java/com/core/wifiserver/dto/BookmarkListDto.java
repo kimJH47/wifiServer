@@ -1,16 +1,15 @@
 package com.core.wifiserver.dto;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
 public class BookmarkListDto {
-    private final int id;
-    private final String bookMarkGroupName;
-    private final String wifiName;
-    private final String createDate;
-
+    private int id;
+    private String bookmarkGroupName;
+    private String wifiName;
+    private String createDate;
 
 }
