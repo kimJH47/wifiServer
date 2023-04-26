@@ -15,9 +15,8 @@ public class BookmarkListDao {
         this.jdbcContext = JdbcContext.getInstance();
     }
 
-    public int save(String name, String wifiName, int fk) {
+    public int save(String wifiName, int fk) {
         String query = QueryBuilderFactory.createInsertQueryBuilder(TABLE_NAME)
-                .addColumn("bookmark_group_name").value(name)
                 .addColumn("wifi_name").value(wifiName)
                 .addColumn("create_date").value(LocalDateTime.now().toString())
                 .addColumn("bookmark_group_id").value(fk)
@@ -33,14 +32,13 @@ public class BookmarkListDao {
     }
 
     public List<BookmarkListDto> findAll() {
-        String query = QueryBuilderFactory.createSelectQueryBuilder(TABLE_NAME)
-                .build();
-        return jdbcContext.select(query, resultSet -> {
+        String join = "select l.id, g.name, l.wifi_name, l.create_date from bookmark_list l left join bookmark_group g";
+        return jdbcContext.select(join, resultSet -> {
             ArrayList<BookmarkListDto> bookmarkListDtos = new ArrayList<>();
             while (resultSet.next()) {
                 bookmarkListDtos.add(
                         new BookmarkListDto(resultSet.getInt("id"),
-                                resultSet.getString("bookmark_group_name"),
+                                resultSet.getString("name"),
                                 resultSet.getString("wifi_name"),
                                 resultSet.getString("create_date")
                         )
@@ -48,7 +46,5 @@ public class BookmarkListDao {
             }
             return bookmarkListDtos;
         });
-
     }
-
 }
