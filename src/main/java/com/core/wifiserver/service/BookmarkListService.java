@@ -17,9 +17,7 @@ public class BookmarkListService {
         BookmarkListDto entity = request.getEntity();
         return Response.<Integer>builder()
                 .statusCode(StatusCode.SUCCESS)
-                .entity(bookmarkListDao.save(entity.getBookMarkGroupName(),
-                        entity.getWifiName(),
-                        entity.getId()
+                .entity(bookmarkListDao.save(entity.getWifiName(), entity.getId()
                 ))
                 .build();
     }
