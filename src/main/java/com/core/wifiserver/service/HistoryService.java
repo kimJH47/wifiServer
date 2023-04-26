@@ -15,8 +15,8 @@ public class HistoryService {
         this.historyDao = historyDao;
     }
 
-    public Response<?> save(Request<HistoryRequest> historyRequestRequest) {
-        return Response.builder()
+    public Response<Integer> save(Request<HistoryRequest> historyRequestRequest) {
+        return Response.<Integer>builder()
                 .statusCode(StatusCode.SUCCESS)
                 .entity(historyDao.save(historyRequestRequest.getEntity().getLatitude(),
                         historyRequestRequest.getEntity().getLongitude()))
