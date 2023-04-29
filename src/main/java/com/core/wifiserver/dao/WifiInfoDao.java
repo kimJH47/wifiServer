@@ -78,14 +78,19 @@ public class WifiInfoDao {
                 longitude, longitude);
         String query = QueryBuilderFactory.createSelectQueryBuilder(TABLE_NAME)
                 .columns("*", distance)
-                .where(String.format("mgrNo = '%s'", mgrNo))
+                .where(String.format("MGR_NO = %s", mgrNo))
                 .build();
-        return jdbcContext.select(query, this::getWifiInfoDto);
+        return jdbcContext.select(query, resultSet -> {
+            while (resultSet.next()) {
+                return getWifiInfoDto(resultSet);
+            }
+            throw new IllegalStateException();
+        });
     }
 
     private WifiDto getWifiInfoDto(ResultSet resultSet) throws SQLException {
         return WifiDto.builder()
-                .distance(resultSet.getDouble("DISTANCE"))
+                .distance(Math.round(resultSet.getDouble("DISTANCE") * 100) / 100.0)
                 .mgrNo(resultSet.getString("MGR_NO"))
                 .WRDOFC(resultSet.getString("WRDOFC"))
                 .name(resultSet.getString("NAME"))
