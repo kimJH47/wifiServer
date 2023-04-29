@@ -32,7 +32,8 @@ public class BookmarkListDao {
     }
 
     public List<BookmarkListDto> findAll() {
-        String join = "select l.id, g.name, l.wifi_name, l.create_date from bookmark_list l left join bookmark_group g";
+        String join = "select l.id, g.name, l.wifi_name, l.create_date from bookmark_list l"
+                + "left join bookmark_group g where l.id = g.id";
         return jdbcContext.select(join, resultSet -> {
             ArrayList<BookmarkListDto> bookmarkListDtos = new ArrayList<>();
             while (resultSet.next()) {
