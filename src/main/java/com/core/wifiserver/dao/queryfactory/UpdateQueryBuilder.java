@@ -37,9 +37,13 @@ public class UpdateQueryBuilder {
     public String build() {
         StringBuilder setBuilder = new StringBuilder();
         for (int i = 0; i < values.size(); i++) {
+            if (i != 0 && i <= values.size() - 1) {
+                setBuilder.append(", ");
+            }
             Object value = values.get(i);
             if (value instanceof Integer) {
-                setBuilder.append(columns.get(i)).append("=").append(value);
+                setBuilder.append(columns.get(i)).append("=")
+                        .append(value);
                 continue;
             }
             setBuilder.append(columns.get(i))
@@ -47,16 +51,12 @@ public class UpdateQueryBuilder {
                     .append("\"")
                     .append(value)
                     .append("\"");
-
-            if (i < values.size() - 1) {
-                setBuilder.append(",");
-            }
             if (where.isEmpty()) {
                 return "UPDATE " + tableName + " SET " + setBuilder;
             }
 
         }
-        return "UPDATE " + tableName + " SET " + setBuilder + "where " + where;
+        return "UPDATE " + tableName + " SET " + setBuilder + " where " + where;
     }
 
     @RequiredArgsConstructor
