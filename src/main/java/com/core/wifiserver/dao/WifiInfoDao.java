@@ -78,7 +78,7 @@ public class WifiInfoDao {
                 longitude, longitude);
         String query = QueryBuilderFactory.createSelectQueryBuilder(TABLE_NAME)
                 .columns("*", distance)
-                .where(String.format("MGR_NO = %s", mgrNo))
+                .where(String.format("MGR_NO = '%s'", mgrNo))
                 .build();
         return jdbcContext.select(query, resultSet -> {
             while (resultSet.next()) {
@@ -110,4 +110,10 @@ public class WifiInfoDao {
                 .build();
     }
 
+    public int getTotalCount() {
+        String query = QueryBuilderFactory.createSelectQueryBuilder(TABLE_NAME)
+                .columns("count(*) as count")
+                .build();
+        return jdbcContext.select(query, resultSet -> resultSet.getInt("count"));
+    }
 }
