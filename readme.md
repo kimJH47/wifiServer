@@ -1,0 +1,41 @@
+classDiagram
+direction BT
+class BOOKMARK_GROUP {
+text NAME
+integer ORDERS
+text CREATE_DATE
+text MODIFIED_DATE
+integer ID
+}
+class BOOKMARK_LIST {
+text WIFI_NAME
+text CREATE_DATE
+integer BOOKMARK_GROUP_ID
+integer ID
+}
+class HISTORY {
+text LATITUDE
+text LONGITUDE
+text CREATE_DATE
+integer ID
+}
+class PUBLIC_WIFI_INFO {
+text MGR_NO
+text WRDOFC
+text NAME
+text STREET_ADDRESS
+text DETAIL_ADDRESS
+integer INSTALL_FLOOR
+text INSTALL_TYPE
+text INSTALL_MBY
+text SVC_SE
+text CMCWR
+text CNSTC_YEAR
+text INOUT_DOOR
+integer REMARS3
+text LAT
+text LNT
+text WORK_DTTM
+integer id
+}
+BOOKMARK_LIST  -->  BOOKMARK_GROUP : BOOKMARK_GROUP_ID:ID
