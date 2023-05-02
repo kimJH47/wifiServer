@@ -22,15 +22,16 @@ create table PUBLIC_WIFI_INFO
 create table HISTORY
 (
     ID          integer not null constraint Id primary key autoincrement,
-    X           TEXT,
-    Y           TEXT,
+    LATITUDE    TEXT,
+    LONGITUDE   TEXT,
     CREATE_DATE TEXT
 );
+
+
 
 create table BOOKMARK_LIST
 (
     ID                INTEGER not null constraint ID primary key autoincrement,
-    BOOKMARK_NAME     TEXT,
     WIFI_NAME         TEXT,
     CREATE_DATE       TEXT,
     BOOKMARK_GROUP_ID integer
