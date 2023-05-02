@@ -16,7 +16,7 @@ public class BookmarkGroupService {
         return Response.<Integer>builder()
                 .statusCode(StatusCode.SUCCESS)
                 .entity(bookmarkGroupDao.save(bookmarkGroupRequest.getEntity().getName(),
-                        bookmarkGroupRequest.getEntity().getOrder()))
+                        bookmarkGroupRequest.getEntity().getOrders()))
                 .build();
 
     }
@@ -40,7 +40,7 @@ public class BookmarkGroupService {
         return Response.<Integer>builder()
                 .statusCode(StatusCode.SUCCESS)
                 .entity(bookmarkGroupDao.update(entity.getId(),
-                        entity.getOrder(),
+                        entity.getOrders(),
                         entity.getName()))
                 .build();
     }
