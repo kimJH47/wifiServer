@@ -10,7 +10,7 @@ public class BookmarkGroupDto {
 
     private final int id;
     private final String name;
-    private final int order;
+    private final int orders;
     private final String createDate;
     private final String modifiedDate;
 }
