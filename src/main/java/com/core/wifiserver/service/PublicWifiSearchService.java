@@ -43,6 +43,7 @@ public class PublicWifiSearchService {
     public Response<List<WifiDto>> findOrderByCoordinateWithPagination(Request<WifiSearchRequest> request) {
         return Response.<List<WifiDto>>builder()
                 .statusCode(StatusCode.SUCCESS)
+                .totalCount(geTotalCount())
                 .entity(wifiInfoDao.findOrderByCoordinateWithPagination(
                         request.getEntity().getLatitude(),
                         request.getEntity().getLongitude(),
@@ -55,5 +56,9 @@ public class PublicWifiSearchService {
                 .statusCode(StatusCode.SUCCESS)
                 .entity(wifiInfoDao.findOne(mgrNo, latitude, longitude))
                 .build();
+    }
+
+    private int geTotalCount() {
+        return wifiInfoDao.getTotalCount();
     }
 }
