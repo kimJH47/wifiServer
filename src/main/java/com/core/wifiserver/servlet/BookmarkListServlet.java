@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @WebServlet(value = "/bookmark-list")
-public class BookmarkGroupListServlet extends HttpServlet {
+public class BookmarkListServlet extends HttpServlet {
 
     private BookmarkListService bookmarkListService;
 
