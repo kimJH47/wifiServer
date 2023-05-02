@@ -10,6 +10,7 @@ import static org.mockito.Mockito.times;
 
 import com.core.wifiserver.dao.BookmarkListDao;
 import com.core.wifiserver.dto.BookmarkListDto;
+import com.core.wifiserver.dto.request.BookmarkSaveRequest;
 import com.core.wifiserver.dto.request.Request;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ class BookmarkListServiceTest {
         //given
         int expected = 1;
         given(bookmarkListDao.save(anyString(), anyInt())).willReturn(expected);
-        Request<BookmarkListDto> request = new Request<>(new BookmarkListDto(-1, "", "wifiName", ""));
+        Request<BookmarkSaveRequest> request = new Request<>(new BookmarkSaveRequest(1, "wifiName"));
         //when
         Integer actual = bookmarkListService.save(request).getEntity();
         //then
