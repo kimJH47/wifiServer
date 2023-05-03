@@ -10,7 +10,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 
-import com.core.wifiserver.client.PublicApiResponseClient;
+import com.core.wifiserver.client.SeoulPublicWifiClient;
 import com.core.wifiserver.client.dto.ResponseEntity;
 import com.core.wifiserver.dao.Page;
 import com.core.wifiserver.dao.WifiInfoDao;
@@ -28,14 +28,14 @@ import org.junit.jupiter.api.Test;
 class PublicWifiSearchServiceTest {
 
     PublicWifiSearchService publicWifiSearchService;
-    PublicApiResponseClient publicApiResponseClient;
+    SeoulPublicWifiClient seoulPublicWifiClient;
     WifiInfoDao wifiInfoDao;
 
     @BeforeEach
     void init() {
-        publicApiResponseClient = mock(PublicApiResponseClient.class);
+        seoulPublicWifiClient = mock(SeoulPublicWifiClient.class);
         wifiInfoDao = mock(WifiInfoDao.class);
-        publicWifiSearchService = new PublicWifiSearchService(publicApiResponseClient, wifiInfoDao);
+        publicWifiSearchService = new PublicWifiSearchService(seoulPublicWifiClient, wifiInfoDao);
     }
 
     @Test
@@ -45,8 +45,8 @@ class PublicWifiSearchServiceTest {
         long firstCall = 999L;
         long secondCall = 1L;
         int expected = (int) (firstCall + secondCall);
-        given(publicApiResponseClient.getApiTotalCount()).willReturn(expected);
-        given(publicApiResponseClient.getPublicWifiList(anyInt(), anyInt()))
+        given(seoulPublicWifiClient.getApiTotalCount()).willReturn(expected);
+        given(seoulPublicWifiClient.getPublicWifiList(anyInt(), anyInt()))
                 .willReturn(
                         new ResponseEntity(expected, "101", new ArrayList<>(Collections.nCopies(999, null)))
                         , new ResponseEntity(expected, "101", new ArrayList<>(Collections.nCopies(1, null))));
@@ -55,8 +55,8 @@ class PublicWifiSearchServiceTest {
         Response<Integer> response = publicWifiSearchService.addPublicWifi();
         Integer actual = response.getEntity();
         //then
-        then(publicApiResponseClient).should(times(1)).getApiTotalCount();
-        then(publicApiResponseClient).should(times(2)).getPublicWifiList(anyInt(), anyInt());
+        then(seoulPublicWifiClient).should(times(1)).getApiTotalCount();
+        then(seoulPublicWifiClient).should(times(2)).getPublicWifiList(anyInt(), anyInt());
         then(wifiInfoDao).should(times(2)).save(any());
         assertThat(actual).isEqualTo(expected);
 

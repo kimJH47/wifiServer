@@ -1,7 +1,7 @@
 package com.core.wifiserver.servlet;
 
 
-import com.core.wifiserver.client.PublicApiResponseClient;
+import com.core.wifiserver.client.SeoulPublicWifiClient;
 import com.core.wifiserver.dao.WifiInfoDao;
 import com.core.wifiserver.dto.response.Response;
 import com.core.wifiserver.service.PublicWifiSearchService;
@@ -20,7 +20,7 @@ public class WifiClientServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        publicWifiSearchService = new PublicWifiSearchService(new PublicApiResponseClient(), new WifiInfoDao());
+        publicWifiSearchService = new PublicWifiSearchService(new SeoulPublicWifiClient(), new WifiInfoDao());
     }
 
     @Override

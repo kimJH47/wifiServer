@@ -1,7 +1,7 @@
 package com.core.wifiserver.service;
 
 
-import com.core.wifiserver.client.PublicApiResponseClient;
+import com.core.wifiserver.client.SeoulPublicWifiClient;
 import com.core.wifiserver.client.dto.PublicApiConfig;
 import com.core.wifiserver.dao.WifiInfoDao;
 import com.core.wifiserver.dto.StatusCode;
@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class PublicWifiSearchService {
-    private final PublicApiResponseClient client;
+    private final SeoulPublicWifiClient client;
     private final WifiInfoDao wifiInfoDao;
 
     public Response<Integer> addPublicWifi() {

@@ -10,7 +10,7 @@ import okhttp3.Request;
 import okhttp3.Request.Builder;
 import okhttp3.Response;
 
-public class PublicApiResponseClient {
+public class SeoulPublicWifiClient {
 
     public ResponseEntity getPublicWifiList(int start, int end) {
         return getResponseEntity(start, end);
