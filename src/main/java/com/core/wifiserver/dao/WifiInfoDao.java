@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class WifiInfoDao {
 
     private static final String TABLE_NAME = "PUBLIC_WIFI_INFO";
+    private static final String NO_SEARCH_WIFI = "와이파이 정보가 존재하지 않습니다.";
     private final JdbcContext jdbcContext;
 
     public WifiInfoDao() {
@@ -82,10 +83,11 @@ public class WifiInfoDao {
                 .where(String.format("MGR_NO = '%s'", mgrNo))
                 .build();
         return jdbcContext.select(query, resultSet -> {
-            while (resultSet.next()) {
+            try {
                 return getWifiInfoDto(resultSet);
+            } catch (Exception e) {
+                throw new IllegalArgumentException(NO_SEARCH_WIFI);
             }
-            throw new IllegalStateException();
         });
     }
 

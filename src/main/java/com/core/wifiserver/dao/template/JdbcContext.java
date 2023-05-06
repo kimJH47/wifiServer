@@ -1,6 +1,7 @@
 package com.core.wifiserver.dao.template;
 
 import com.core.wifiserver.dao.ConnectionProvider;
+import com.core.wifiserver.exception.DatabaseInoperativeException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -40,7 +41,7 @@ public class JdbcContext {
         try (Statement stmt = statementStrategy.makeStatement(connection)) {
             return stmt.executeUpdate(query);
         } catch (SQLException e) {
-            throw new IllegalStateException(e);
+            throw new DatabaseInoperativeException(e);
         } finally {
             ConnectionProvider.close(connection);
         }
@@ -56,7 +57,7 @@ public class JdbcContext {
 
         } catch (SQLException e) {
             ConnectionProvider.rollback(connection);
-            throw new IllegalStateException(e);
+            throw new DatabaseInoperativeException(e);
         } finally {
             ConnectionProvider.close(connection);
         }
@@ -71,7 +72,7 @@ public class JdbcContext {
         try (Statement statement = statementStrategy.makeStatement(connection)) {
             return lowMapper.mapRow(statement.executeQuery(query));
         } catch (SQLException e) {
-            throw new IllegalStateException(e);
+            throw new DatabaseInoperativeException(e);
         } finally {
             ConnectionProvider.close(connection);
         }

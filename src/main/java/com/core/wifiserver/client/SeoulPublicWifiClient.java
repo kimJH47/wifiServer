@@ -3,8 +3,8 @@ package com.core.wifiserver.client;
 
 import com.core.wifiserver.client.config.PublicApiConfig;
 import com.core.wifiserver.client.dto.ResponseEntity;
+import com.core.wifiserver.exception.ClientNotWorkingException;
 import com.google.gson.Gson;
-import java.io.IOException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Request.Builder;
@@ -31,9 +31,9 @@ public class SeoulPublicWifiClient {
                 Gson gson = new Gson();
                 return gson.fromJson(execute.body().string(), ResponseEntity.class);
             }
-            throw new IllegalArgumentException("응답실패");
-        } catch (IOException e) {
-            throw new IllegalArgumentException(e);
+            throw new ClientNotWorkingException();
+        } catch (Exception e) {
+            throw new ClientNotWorkingException(e);
         }
     }
 

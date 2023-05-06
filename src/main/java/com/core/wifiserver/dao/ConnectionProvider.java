@@ -1,5 +1,6 @@
 package com.core.wifiserver.dao;
 
+import com.core.wifiserver.exception.DatabaseInoperativeException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.naming.Context;
@@ -19,7 +20,7 @@ public class ConnectionProvider {
             dataSource = (DataSource) context.lookup("java:comp/env/jdbc/SQLiteDB");
             Class.forName("org.sqlite.JDBC");
         } catch (Exception e) {
-            throw new IllegalArgumentException(e);
+            throw new DatabaseInoperativeException(e);
         }
     }
 
@@ -29,7 +30,7 @@ public class ConnectionProvider {
             return dataSource.getConnection();
 
         } catch (SQLException e) {
-            throw new IllegalStateException("", e);
+            throw new DatabaseInoperativeException(e);
         }
     }
 
@@ -40,7 +41,7 @@ public class ConnectionProvider {
                 connection.close();
             }
         } catch (SQLException e) {
-            throw new IllegalStateException(e);
+            throw new DatabaseInoperativeException(e);
         }
     }
 
@@ -49,7 +50,8 @@ public class ConnectionProvider {
             connection.setAutoCommit(false);
         } catch (SQLException e) {
             close(connection);
-            throw new IllegalStateException(e);
+            throw new DatabaseInoperativeException(e);
+
         }
     }
 
@@ -58,15 +60,7 @@ public class ConnectionProvider {
             connection.commit();
         } catch (SQLException e) {
             rollback(connection);
-            throw new IllegalStateException(e);
-        }
-    }
-
-    public static void commit(Connection connection) {
-        try {
-            connection.commit();
-        } catch (SQLException e) {
-            throw new IllegalStateException(e);
+            throw new DatabaseInoperativeException(e);
         }
     }
 
@@ -74,7 +68,7 @@ public class ConnectionProvider {
         try {
             connection.rollback();
         } catch (SQLException e) {
-            throw new IllegalStateException(e);
+            throw new DatabaseInoperativeException(e);
         }
     }
 }
