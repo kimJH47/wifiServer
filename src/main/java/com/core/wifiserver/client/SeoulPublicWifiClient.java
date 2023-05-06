@@ -1,7 +1,7 @@
 package com.core.wifiserver.client;
 
 
-import com.core.wifiserver.client.dto.PublicApiConfig;
+import com.core.wifiserver.client.config.PublicApiConfig;
 import com.core.wifiserver.client.dto.ResponseEntity;
 import com.google.gson.Gson;
 import java.io.IOException;

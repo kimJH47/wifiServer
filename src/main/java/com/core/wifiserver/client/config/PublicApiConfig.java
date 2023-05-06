@@ -1,4 +1,4 @@
-package com.core.wifiserver.client.dto;
+package com.core.wifiserver.client.config;
 
 public class PublicApiConfig {
 

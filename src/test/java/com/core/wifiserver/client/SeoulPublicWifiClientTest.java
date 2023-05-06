@@ -1,6 +1,6 @@
 package com.core.wifiserver.client;
 
-import com.core.wifiserver.client.dto.PublicApiConfig;
+import com.core.wifiserver.client.config.PublicApiConfig;
 import com.core.wifiserver.client.dto.ResponseEntity;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

@@ -2,7 +2,7 @@ package com.core.wifiserver.service;
 
 
 import com.core.wifiserver.client.SeoulPublicWifiClient;
-import com.core.wifiserver.client.dto.PublicApiConfig;
+import com.core.wifiserver.client.config.PublicApiConfig;
 import com.core.wifiserver.dao.WifiInfoDao;
 import com.core.wifiserver.dto.WifiDto;
 import com.core.wifiserver.dto.request.WifiSearchRequest;
