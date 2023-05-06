@@ -1,6 +1,5 @@
 package com.core.wifiserver.servlet;
 
-import com.core.wifiserver.dto.StatusCode;
 import com.core.wifiserver.dto.response.Response;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -21,17 +20,17 @@ public class ServletUtils {
         return new Gson().fromJson(requestBody, JsonObject.class);
     }
 
-    public static <T> String entityToJson(T entity) {
-        return new Gson().toJson(entity);
+    public static <T> String entityToResponseJson(T entity) {
+        return new Gson().toJson(Response.builder()
+                .entity(entity)
+                .build());
     }
 
     public static void createFailResponse(HttpServletResponse httpServletResponse, Exception e) throws IOException {
         httpServletResponse.setStatus(500);
         httpServletResponse.getWriter().print(
                 new Gson().toJson(Response.builder()
-                        .statusCode(StatusCode.FAIL)
                         .entity(e.getMessage())
                         .build()));
     }
-
 }
