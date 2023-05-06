@@ -1,5 +1,4 @@
 # Contents #
-
 - [Application Architecture](#Application Architecture)
 - [Flow Chart](#Flow Chart)
 - [API](#API)
@@ -313,6 +312,7 @@ Content-Type: application/json
             "workDttm": "2023-04-27 10:58:30.0"
         },
         /* 페이징된 공공 와이파이 정보 데이터  */
+    ]    
 }
 ```
 ### 공공 와이파이 단건 조회 ###
@@ -393,7 +393,7 @@ DELETE /history HTTP/1.1
 Content-Type: application/json
 
 {
-    id : 1
+    "id" : 1
 }
 ```
 ``` http
@@ -427,7 +427,8 @@ HTTP/1.1 200 OK
 POST /update-bookmark-group HTTP/1.1
 Content-Type: application/json
  
-{   id : 1,
+{   
+    "id" : 1,
     "name": "list1-1",
     "order": "3"
 }
@@ -474,7 +475,7 @@ DELETE /bookmark-group HTTP/1.1
 Content-Type: application/json
 
 {
-    id : 1
+    "id" : 1
 }
 ```
 ``` http
@@ -535,7 +536,7 @@ DELETE /bookmark-list HTTP/1.1
 Content-Type: application/json
 
 {
-    id : 1
+    "id" : 1
 }
 ```
 ``` http
