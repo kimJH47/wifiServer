@@ -17,7 +17,7 @@ import com.core.wifiserver.dao.WifiInfoDao;
 import com.core.wifiserver.dto.WifiDto;
 import com.core.wifiserver.dto.request.Request;
 import com.core.wifiserver.dto.request.WifiSearchRequest;
-import com.core.wifiserver.dto.response.Response;
+import com.core.wifiserver.dto.response.WifiPaginationEntity;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -52,8 +52,7 @@ class PublicWifiSearchServiceTest {
                         , new ResponseEntity(expected, "101", new ArrayList<>(Collections.nCopies(1, null))));
         given(wifiInfoDao.save(any())).willReturn(firstCall, secondCall);
         //when
-        Response<Integer> response = publicWifiSearchService.addPublicWifi();
-        Integer actual = response.getEntity();
+        Integer actual = publicWifiSearchService.addPublicWifi();
         //then
         then(seoulPublicWifiClient).should(times(1)).getApiTotalCount();
         then(seoulPublicWifiClient).should(times(2)).getPublicWifiList(anyInt(), anyInt());
@@ -64,7 +63,7 @@ class PublicWifiSearchServiceTest {
 
     @Test
     @DisplayName("페이징 정보가 포함된 request 를 받으면 사이즈에 맞게 와이파이정보를 반환해야한다.")
-    public void findOrderByCoordinateWithPagination() throws Exception {
+    void findOrderByCoordinateWithPagination() throws Exception {
         //given
         Page page = new Page(1, 20);
         WifiSearchRequest wifiSearchRequest = new WifiSearchRequest(page, 35.123, 120.123);
@@ -76,26 +75,25 @@ class PublicWifiSearchServiceTest {
         given(wifiInfoDao.findOrderByCoordinateWithPagination(anyDouble(), anyDouble(), any(Page.class)))
                 .willReturn(wifiInfoDto);
         //when
-        Response<List<WifiDto>> response = publicWifiSearchService.findOrderByCoordinateWithPagination(
+        WifiPaginationEntity entity = publicWifiSearchService.findOrderByCoordinateWithPagination(
                 new Request<>(wifiSearchRequest));
         //then
         then(wifiInfoDao).should(times(1)).findOrderByCoordinateWithPagination
                 (anyDouble(), anyDouble(), any(Page.class));
-        List<WifiDto> actual = response.getEntity();
+        List<WifiDto> actual = entity.getWifiList();
         assertThat(actual).hasSize(3);
         assertThat(actual.get(0).getMgrNo()).isEqualTo("---GR00000");
     }
 
     @Test
     @DisplayName("mgrNo 를 받아 해당하는 공공와이파이데이터 정보 하나를 반환해야한다.")
-    public void findOne() throws Exception{
+    void findOne() throws Exception {
         //given
         String expected = "--GR000005";
         given(wifiInfoDao.findOne(anyString(), anyDouble(), anyDouble()))
                 .willReturn(createDto(50.10, expected));
         //when
-        WifiDto actual = publicWifiSearchService.findOne("--GR000005", 30.13, 120.213)
-                .getEntity();
+        WifiDto actual = publicWifiSearchService.findOne("--GR000005", 30.13, 120.213);
         //then
         then(wifiInfoDao).should(times(1))
                 .findOne(anyString(), anyDouble(), anyDouble());

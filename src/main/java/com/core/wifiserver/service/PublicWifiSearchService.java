@@ -4,12 +4,10 @@ package com.core.wifiserver.service;
 import com.core.wifiserver.client.SeoulPublicWifiClient;
 import com.core.wifiserver.client.dto.PublicApiConfig;
 import com.core.wifiserver.dao.WifiInfoDao;
-import com.core.wifiserver.dto.StatusCode;
 import com.core.wifiserver.dto.WifiDto;
 import com.core.wifiserver.dto.request.Request;
 import com.core.wifiserver.dto.request.WifiSearchRequest;
-import com.core.wifiserver.dto.response.Response;
-import java.util.List;
+import com.core.wifiserver.dto.response.WifiPaginationEntity;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -17,7 +15,7 @@ public class PublicWifiSearchService {
     private final SeoulPublicWifiClient client;
     private final WifiInfoDao wifiInfoDao;
 
-    public Response<Integer> addPublicWifi() {
+    public Integer addPublicWifi() {
         int apiTotalCount = client.getApiTotalCount();
         int maxResponseCount = PublicApiConfig.getMaxResponseCount();
         int last = 0;
@@ -34,28 +32,19 @@ public class PublicWifiSearchService {
             apiTotalCount -= maxResponseCount;
             last += maxResponseCount + 1;
         }
-        return Response.<Integer>builder()
-                .statusCode(StatusCode.SUCCESS)
-                .entity(insertRow)
-                .build();
+        return insertRow;
     }
 
-    public Response<List<WifiDto>> findOrderByCoordinateWithPagination(Request<WifiSearchRequest> request) {
-        return Response.<List<WifiDto>>builder()
-                .statusCode(StatusCode.SUCCESS)
-                .totalCount(geTotalCount())
-                .entity(wifiInfoDao.findOrderByCoordinateWithPagination(
+    public WifiPaginationEntity findOrderByCoordinateWithPagination(Request<WifiSearchRequest> request) {
+        return new WifiPaginationEntity(geTotalCount(),
+                wifiInfoDao.findOrderByCoordinateWithPagination(
                         request.getEntity().getLatitude(),
                         request.getEntity().getLongitude(),
-                        request.getEntity().getPage()))
-                .build();
+                        request.getEntity().getPage()));
     }
 
-    public Response<WifiDto> findOne(String mgrNo, double latitude, double longitude) {
-        return Response.<WifiDto>builder()
-                .statusCode(StatusCode.SUCCESS)
-                .entity(wifiInfoDao.findOne(mgrNo, latitude, longitude))
-                .build();
+    public WifiDto findOne(String mgrNo, double latitude, double longitude) {
+        return wifiInfoDao.findOne(mgrNo, latitude, longitude);
     }
 
     private int geTotalCount() {
