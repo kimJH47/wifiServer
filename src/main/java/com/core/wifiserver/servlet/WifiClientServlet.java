@@ -3,9 +3,7 @@ package com.core.wifiserver.servlet;
 
 import com.core.wifiserver.client.SeoulPublicWifiClient;
 import com.core.wifiserver.dao.WifiInfoDao;
-import com.core.wifiserver.dto.response.Response;
 import com.core.wifiserver.service.PublicWifiSearchService;
-import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "WifiAddServlet", value = "/add-wifi")
+@WebServlet(name = "WifiAddServlet", value = "/api/add-wifi")
 public class WifiClientServlet extends HttpServlet {
 
     private PublicWifiSearchService publicWifiSearchService;
@@ -28,9 +26,9 @@ public class WifiClientServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("utf-8");
         try {
-            Response<Integer> response = publicWifiSearchService.addPublicWifi();
-            String json = new Gson().toJson(response);
-            resp.getWriter().print(json);
+            int entity = publicWifiSearchService.addPublicWifi();
+            resp.getWriter().print(ServletUtils.entityToResponseJson(entity));
+            resp.setStatus(200);
         } catch (Exception e) {
             ServletUtils.createFailResponse(resp, e);
         } finally {
