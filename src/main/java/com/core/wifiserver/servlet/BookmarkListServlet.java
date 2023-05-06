@@ -23,7 +23,6 @@ public class BookmarkListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("application/json");
         try {
             JsonObject jsonObject = ServletUtils.createJsonObject(req);
             BookmarkSaveRequest request = new BookmarkSaveRequest(
@@ -40,8 +39,6 @@ public class BookmarkListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
         try {
             resp.getWriter().print(ServletUtils.entityToResponseJson(bookmarkListService.findAll()));
             resp.setStatus(200);
@@ -54,7 +51,6 @@ public class BookmarkListServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("application/json");
         try {
             JsonObject jsonObject = ServletUtils.createJsonObject(req);
             resp.getWriter().print(ServletUtils.entityToResponseJson(

@@ -25,8 +25,6 @@ public class WifiInfoServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
         try {
             if (Objects.equals("/api/find-wifi", req.getServletPath())) {
                 findWifi(req, resp);

@@ -23,8 +23,6 @@ public class WifiClientServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("utf-8");
         try {
             int entity = publicWifiSearchService.addPublicWifi();
             resp.getWriter().print(ServletUtils.entityToResponseJson(entity));

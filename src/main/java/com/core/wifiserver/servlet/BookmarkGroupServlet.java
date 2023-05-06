@@ -28,9 +28,8 @@ public class BookmarkGroupServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("application/json");
         try {
-            if (Objects.equals(req.getServletPath(), "/bookmark-group")) {
+            if (Objects.equals(req.getServletPath(), "/api/bookmark-group")) {
                 saveBookmarkGroup(req, resp);
             } else {
                 updateBookmarkGroup(req, resp);
@@ -58,8 +57,6 @@ public class BookmarkGroupServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
         try {
             resp.getWriter().print(ServletUtils.entityToResponseJson(bookmarkGroupService.findAll()));
             resp.setStatus(200);
@@ -72,8 +69,6 @@ public class BookmarkGroupServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
         try {
             resp.getWriter()
                     .print(entityToResponseJson(bookmarkGroupService.delete(createJsonObject(req)

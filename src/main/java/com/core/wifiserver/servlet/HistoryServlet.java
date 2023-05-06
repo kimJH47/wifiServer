@@ -22,7 +22,6 @@ public class HistoryServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("application/json");
         try {
             JsonObject jsonObject = ServletUtils.createJsonObject(req);
             HistorySaveRequest request = new HistorySaveRequest(
@@ -39,8 +38,6 @@ public class HistoryServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
         try {
             resp.getWriter().print(ServletUtils.entityToResponseJson(historyService.findAll()));
             resp.setStatus(200);
