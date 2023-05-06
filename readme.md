@@ -1,8 +1,7 @@
 # Contents #
-- [Application Architecture](#Application Architecture)
-- [Flow Chart](#Flow Chart)
-- [API](#API)
-
+- [Application Architecture](#application-architecture)
+- [Flow Chart](#flow-chart)
+- [API](#api)
 ----------------------------------------
 
 # Application Architecture #
