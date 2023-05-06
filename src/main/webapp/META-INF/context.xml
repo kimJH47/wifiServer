@@ -3,6 +3,6 @@
 <Context>
     <Resource name="jdbc/SQLiteDB" auth="Container"
               type="javax.sql.DataSource" driverClassName="org.sqlite.JDBC"
-              url="jdbc:sqlite:/Users/kim/Desktop/zerobase/apache-tomcat-8.5.87/webapps/ROOT/db/test.db"
+              url="jdbc:sqlite:/Users/kim/Desktop/zerobase/apache-tomcat-8.5.87/webapps/ROOT/db/wifisearch.db"
               maxActive="1" maxIdle="1" maxWait="10000" />
 </Context>
