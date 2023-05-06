@@ -2,8 +2,7 @@ package com.core.wifiserver.servlet;
 
 
 import com.core.wifiserver.dao.HistoryDao;
-import com.core.wifiserver.dto.request.HistoryRequest;
-import com.core.wifiserver.dto.request.Request;
+import com.core.wifiserver.dto.request.HistorySaveRequest;
 import com.core.wifiserver.service.HistoryService;
 import com.google.gson.JsonObject;
 import java.io.IOException;
@@ -12,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(value = "/history")
+@WebServlet(value = "/api/history")
 public class HistoryServlet extends HttpServlet {
     private HistoryService historyService;
 
@@ -26,11 +25,11 @@ public class HistoryServlet extends HttpServlet {
         resp.setContentType("application/json");
         try {
             JsonObject jsonObject = ServletUtils.createJsonObject(req);
-            Request<HistoryRequest> request = new Request<>(new HistoryRequest(
+            HistorySaveRequest request = new HistorySaveRequest(
                     jsonObject.get("latitude").getAsDouble(),
-                    jsonObject.get("longitude").getAsDouble()));
-            resp.getWriter().print(ServletUtils.entityToJson(historyService.save(request)));
-
+                    jsonObject.get("longitude").getAsDouble());
+            resp.getWriter().print(ServletUtils.entityToResponseJson(historyService.save(request)));
+            resp.setStatus(200);
         } catch (Exception e) {
             ServletUtils.createFailResponse(resp, e);
         } finally {
@@ -43,8 +42,8 @@ public class HistoryServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         try {
-            resp.getWriter().print(ServletUtils.entityToJson(historyService.findAll()));
-
+            resp.getWriter().print(ServletUtils.entityToResponseJson(historyService.findAll()));
+            resp.setStatus(200);
         } catch (Exception e) {
             ServletUtils.createFailResponse(resp, e);
         } finally {
@@ -55,9 +54,9 @@ public class HistoryServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
-            resp.getWriter().print(ServletUtils.entityToJson(
+            resp.getWriter().print(ServletUtils.entityToResponseJson(
                     historyService.delete(ServletUtils.createJsonObject(req).get("id").getAsInt())));
-
+            resp.setStatus(200);
         } catch (Exception e) {
             ServletUtils.createFailResponse(resp, e);
         } finally {
