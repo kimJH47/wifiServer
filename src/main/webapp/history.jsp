@@ -75,8 +75,8 @@
             $.each(entity, function (i) {
                 str += "<TR>"
                 str += '<TD id="id">' + entity[i].id + '</TD>'
-                str += '<TD id="latitude">' + entity[i].latitude + '</TD>'
                 str += '<TD id="longitude">' + entity[i].longitude + '</TD>'
+                str += '<TD id="latitude">' + entity[i].latitude + '</TD>'
                 str += '<TD id="create-date">' + entity[i].createDate + '</TD>'
                 str += '<TD id="note"><button type="button" class="btn btn-primary" id = "delete" >삭제</button></TD>'
                 str += '</TR>'
