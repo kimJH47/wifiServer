@@ -39,7 +39,7 @@ class BookmarkListServiceTest {
         given(bookmarkListDao.save(anyString(), anyInt())).willReturn(expected);
         Request<BookmarkSaveRequest> request = new Request<>(new BookmarkSaveRequest(1, "wifiName"));
         //when
-        Integer actual = bookmarkListService.save(request).getEntity();
+        Integer actual = bookmarkListService.save(request);
         //then
         then(bookmarkListDao).should(times(1)).save(anyString(), anyInt());
         assertThat(actual).isEqualTo(expected);
@@ -56,7 +56,7 @@ class BookmarkListServiceTest {
                 .toString()));
         given(bookmarkListDao.findAll()).willReturn(bookmarkListDtos);
         //when
-        List<BookmarkListDto> actual = bookmarkListService.findAll().getEntity();
+        List<BookmarkListDto> actual = bookmarkListService.findAll();
         //then
         then(bookmarkListDao).should(times(1)).findAll();
         assertThat(actual).hasSize(2);
@@ -71,7 +71,7 @@ class BookmarkListServiceTest {
         int expected = 1;
         given(bookmarkListDao.delete(anyInt())).willReturn(expected);
         //when
-        Integer acutal = bookmarkListService.delete(1).getEntity();
+        Integer acutal = bookmarkListService.delete(1);
         //then
         then(bookmarkListDao).should(times(1)).delete(anyInt());
         assertThat(acutal).isEqualTo(expected);

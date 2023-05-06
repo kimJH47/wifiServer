@@ -2,10 +2,8 @@ package com.core.wifiserver.service;
 
 import com.core.wifiserver.dao.BookmarkListDao;
 import com.core.wifiserver.dto.BookmarkListDto;
-import com.core.wifiserver.dto.StatusCode;
 import com.core.wifiserver.dto.request.BookmarkSaveRequest;
 import com.core.wifiserver.dto.request.Request;
-import com.core.wifiserver.dto.response.Response;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 
@@ -14,26 +12,17 @@ import lombok.RequiredArgsConstructor;
 public class BookmarkListService {
     private final BookmarkListDao bookmarkListDao;
 
-    public Response<Integer> save(Request<BookmarkSaveRequest> request) {
-        BookmarkSaveRequest entity = request.getEntity();
-        return Response.<Integer>builder()
-                .statusCode(StatusCode.SUCCESS)
-                .entity(bookmarkListDao.save(entity.getWifiName(), entity.getBookmarkGroupId()))
-                .build();
+    public Integer save(Request<BookmarkSaveRequest> request) {
+        return bookmarkListDao.save(request.getEntity().getWifiName(),
+                request.getEntity().getBookmarkGroupId());
     }
 
-    public Response<Integer> delete(int id) {
-        return Response.<Integer>builder()
-                .statusCode(StatusCode.SUCCESS)
-                .entity(bookmarkListDao.delete(id))
-                .build();
+    public Integer delete(int id) {
+        return bookmarkListDao.delete(id);
     }
 
-    public Response<List<BookmarkListDto>> findAll() {
-        return Response.<List<BookmarkListDto>>builder()
-                .statusCode(StatusCode.SUCCESS)
-                .entity(bookmarkListDao.findAll())
-                .build();
+    public List<BookmarkListDto> findAll() {
+        return bookmarkListDao.findAll();
     }
 
 }

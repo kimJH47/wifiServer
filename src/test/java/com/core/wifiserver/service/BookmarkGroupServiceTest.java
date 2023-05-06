@@ -37,7 +37,7 @@ class BookmarkGroupServiceTest {
         int expected = 1;
         given(bookmarkGroupDao.save(anyString(), anyInt())).willReturn(expected);
         //when
-        Integer actual = bookmarkGroupService.save(any).getEntity();
+        Integer actual = bookmarkGroupService.save(any);
         //then
         then(bookmarkGroupDao).should(times(1)).save(anyString(), anyInt());
         assertThat(actual).isEqualTo(expected);
@@ -54,7 +54,7 @@ class BookmarkGroupServiceTest {
         given(bookmarkGroupDao.findAll()).willReturn(expected);
 
         //when
-        List<BookmarkGroupDto> actual = bookmarkGroupService.findAll().getEntity();
+        List<BookmarkGroupDto> actual = bookmarkGroupService.findAll();
         //then
         then(bookmarkGroupDao).should(times(1)).findAll();
         assertThat(actual).hasSize(expected.size())
@@ -68,7 +68,7 @@ class BookmarkGroupServiceTest {
         int expected = 1;
         given(bookmarkGroupDao.delete(anyInt())).willReturn(expected);
         //when
-        Integer actual = bookmarkGroupService.delete(1).getEntity();
+        Integer actual = bookmarkGroupService.delete(1);
         //actual
         then(bookmarkGroupDao).should(times(1)).delete(anyInt());
         assertThat(actual).isEqualTo(expected);
@@ -77,16 +77,16 @@ class BookmarkGroupServiceTest {
 
     @Test
     @DisplayName("북마크 그룹 수정시 order 가 재정렬된 후 저장되어야 한다.")
-    void update() throws Exception{
+    void update() throws Exception {
         //given
         int expected = 1;
         given(bookmarkGroupDao.update(anyInt(), anyInt(), anyString())).willReturn(expected);
         Request<BookmarkGroupDto> req = new Request<>(
                 new BookmarkGroupDto(1, "kim", 3, LocalDateTime.now().toString(), null));
         //when
-        Integer actual = bookmarkGroupService.update(req).getEntity();
+        Integer actual = bookmarkGroupService.update(req);
         //then
-        then(bookmarkGroupDao).should(times(1)).update(anyInt(),anyInt(),anyString());
+        then(bookmarkGroupDao).should(times(1)).update(anyInt(), anyInt(), anyString());
         assertThat(actual).isEqualTo(expected);
 
     }
