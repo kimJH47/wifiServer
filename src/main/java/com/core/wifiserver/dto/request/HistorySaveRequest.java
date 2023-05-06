@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class HistoryRequest {
+public class HistorySaveRequest {
     private final double latitude;
     private final double longitude;
 }
