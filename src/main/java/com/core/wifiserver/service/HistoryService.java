@@ -2,8 +2,7 @@ package com.core.wifiserver.service;
 
 import com.core.wifiserver.dao.HistoryDao;
 import com.core.wifiserver.dto.HistoryDto;
-import com.core.wifiserver.dto.request.HistoryRequest;
-import com.core.wifiserver.dto.request.Request;
+import com.core.wifiserver.dto.request.HistorySaveRequest;
 import java.util.List;
 
 public class HistoryService {
@@ -13,10 +12,8 @@ public class HistoryService {
         this.historyDao = historyDao;
     }
 
-    public Integer save(Request<HistoryRequest> historyRequestRequest) {
-        return historyDao.save(historyRequestRequest.getEntity().getLatitude(),
-                historyRequestRequest.getEntity().getLongitude());
-
+    public Integer save(HistorySaveRequest request) {
+        return historyDao.save(request.getLatitude(), request.getLongitude());
     }
 
     public Integer delete(int id) {

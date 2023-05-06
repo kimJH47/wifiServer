@@ -5,7 +5,6 @@ import com.core.wifiserver.client.SeoulPublicWifiClient;
 import com.core.wifiserver.client.dto.PublicApiConfig;
 import com.core.wifiserver.dao.WifiInfoDao;
 import com.core.wifiserver.dto.WifiDto;
-import com.core.wifiserver.dto.request.Request;
 import com.core.wifiserver.dto.request.WifiSearchRequest;
 import com.core.wifiserver.dto.response.WifiPaginationEntity;
 import lombok.RequiredArgsConstructor;
@@ -35,12 +34,12 @@ public class PublicWifiSearchService {
         return insertRow;
     }
 
-    public WifiPaginationEntity findOrderByCoordinateWithPagination(Request<WifiSearchRequest> request) {
+    public WifiPaginationEntity findOrderByCoordinateWithPagination(WifiSearchRequest request) {
         return new WifiPaginationEntity(geTotalCount(),
                 wifiInfoDao.findOrderByCoordinateWithPagination(
-                        request.getEntity().getLatitude(),
-                        request.getEntity().getLongitude(),
-                        request.getEntity().getPage()));
+                        request.getLatitude(),
+                        request.getLongitude(),
+                        request.getPage()));
     }
 
     public WifiDto findOne(String mgrNo, double latitude, double longitude) {

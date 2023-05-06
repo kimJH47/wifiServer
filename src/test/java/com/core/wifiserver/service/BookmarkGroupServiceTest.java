@@ -10,7 +10,8 @@ import static org.mockito.Mockito.times;
 
 import com.core.wifiserver.dao.BookmarkGroupDao;
 import com.core.wifiserver.dto.BookmarkGroupDto;
-import com.core.wifiserver.dto.request.Request;
+import com.core.wifiserver.dto.request.BookmarkGroupSaveRequest;
+import com.core.wifiserver.dto.request.BookmarkGroupUpdateRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +33,11 @@ class BookmarkGroupServiceTest {
     @DisplayName("BookmarkGroup save request 를 받으면 저장 후 1이 반환 되어야한다.")
     void save() throws Exception {
         //given
-        Request<BookmarkGroupDto> any = new Request<>(
-                new BookmarkGroupDto(-1, "book", 1, LocalDateTime.now().toString(), null));
+        BookmarkGroupSaveRequest request = new BookmarkGroupSaveRequest("book", 1);
         int expected = 1;
         given(bookmarkGroupDao.save(anyString(), anyInt())).willReturn(expected);
         //when
-        Integer actual = bookmarkGroupService.save(any);
+        Integer actual = bookmarkGroupService.save(request);
         //then
         then(bookmarkGroupDao).should(times(1)).save(anyString(), anyInt());
         assertThat(actual).isEqualTo(expected);
@@ -81,10 +81,9 @@ class BookmarkGroupServiceTest {
         //given
         int expected = 1;
         given(bookmarkGroupDao.update(anyInt(), anyInt(), anyString())).willReturn(expected);
-        Request<BookmarkGroupDto> req = new Request<>(
-                new BookmarkGroupDto(1, "kim", 3, LocalDateTime.now().toString(), null));
+        BookmarkGroupUpdateRequest request = new BookmarkGroupUpdateRequest(1, "kim", 3);
         //when
-        Integer actual = bookmarkGroupService.update(req);
+        Integer actual = bookmarkGroupService.update(request);
         //then
         then(bookmarkGroupDao).should(times(1)).update(anyInt(), anyInt(), anyString());
         assertThat(actual).isEqualTo(expected);

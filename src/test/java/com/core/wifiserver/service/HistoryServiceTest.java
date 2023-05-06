@@ -10,8 +10,7 @@ import static org.mockito.Mockito.times;
 
 import com.core.wifiserver.dao.HistoryDao;
 import com.core.wifiserver.dto.HistoryDto;
-import com.core.wifiserver.dto.request.HistoryRequest;
-import com.core.wifiserver.dto.request.Request;
+import com.core.wifiserver.dto.request.HistorySaveRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ class HistoryServiceTest {
         //given
         int expected = 1;
         given(historyDao.save(anyDouble(), anyDouble())).willReturn(expected);
-        Request<HistoryRequest> request = new Request<>(new HistoryRequest(40.3, 30.134));
+        HistorySaveRequest request = new HistorySaveRequest(40.3, 30.134);
         //when
         Integer actual = historyService.save(request);
         //then
