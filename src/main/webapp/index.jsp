@@ -89,7 +89,7 @@
         }
         $.ajax({
             type: 'POST',
-            url: '/history',
+            url: '/api/history',
             data: JSON.stringify(data),
             contentType: 'application/json; charset=utf-8',
         }).done(function (data) {
@@ -106,7 +106,7 @@
     }
 
     function search_wifi(pageNumber) {
-        let url = '/find-wifi' +
+        let url = '/api/find-wifi' +
             "?" + "pageNumber=" + pageNumber.toString() + "&" +
             "latitude=" + document.getElementById("input-lat").value + "&" +
             "longitude=" + document.getElementById("input-lnt").value;
@@ -116,32 +116,33 @@
             url: url,
             contentType: 'application/json; charset=utf-8',
         }).done(function (data) {
-            let response = data.entity;
+            let entity = data.entity;
+            let wifiList = entity.wifiList;
             let str = "";
             $("tr:has(td)").remove();
-            $.each(response, function (i) {
+            $.each(wifiList, function (i) {
                 str += "<TR>"
-                str += '<TD id="distance">' + response[i].distance + '</TD>'
-                str += '<TD id="mgrNo">' + response[i].mgrNo + '</TD>'
-                str += '<TD id="WRDOFC">' + response[i].WRDOFC + '</TD>'
-                str += '<TD id="name">' + response[i].name + '</TD>'
-                str += '<TD id="streetAddress">' + response[i].streetAddress + '</TD>'
-                str += '<TD id="detailAddress">' + response[i].detailAddress + '</TD>'
-                str += '<TD id="installFloor">' + response[i].installFloor + '</TD>'
-                str += '<TD id="installType">' + response[i].installType + '</TD>'
-                str += '<TD id="installMby">' + response[i].installMby + '</TD>'
-                str += '<TD id="svcEc">' + response[i].svcEc + '</TD>'
-                str += '<TD id="cmcwr">' + response[i].cmcwr + '</TD>'
-                str += '<TD id="cnstcYear">' + response[i].cnstcYear + '</TD>'
-                str += '<TD id="inoutDoor">' + response[i].inoutDoor + '</TD>'
-                str += '<TD id="remars3">' + response[i].remars3 + '</TD>'
-                str += '<TD id="longitude">' + response[i].longitude + '</TD>'
-                str += '<TD id="latitude">' + response[i].latitude + '</TD>'
-                str += '<TD id="workDttm">' + response[i].workDttm + '</TD>'
+                str += '<TD id="distance">' + wifiList[i].distance + '</TD>'
+                str += '<TD id="mgrNo">' + wifiList[i].mgrNo + '</TD>'
+                str += '<TD id="WRDOFC">' + wifiList[i].WRDOFC + '</TD>'
+                str += '<TD id="name">' + wifiList[i].name + '</TD>'
+                str += '<TD id="streetAddress">' + wifiList[i].streetAddress + '</TD>'
+                str += '<TD id="detailAddress">' + wifiList[i].detailAddress + '</TD>'
+                str += '<TD id="installFloor">' + wifiList[i].installFloor + '</TD>'
+                str += '<TD id="installType">' + wifiList[i].installType + '</TD>'
+                str += '<TD id="installMby">' + wifiList[i].installMby + '</TD>'
+                str += '<TD id="svcEc">' + wifiList[i].svcEc + '</TD>'
+                str += '<TD id="cmcwr">' + wifiList[i].cmcwr + '</TD>'
+                str += '<TD id="cnstcYear">' + wifiList[i].cnstcYear + '</TD>'
+                str += '<TD id="inoutDoor">' + wifiList[i].inoutDoor + '</TD>'
+                str += '<TD id="remars3">' + wifiList[i].remars3 + '</TD>'
+                str += '<TD id="longitude">' + wifiList[i].longitude + '</TD>'
+                str += '<TD id="latitude">' + wifiList[i].latitude + '</TD>'
+                str += '<TD id="workDttm">' + wifiList[i].workDttm + '</TD>'
                 str += '</TR>'
             });
             $("#result").append(str);
-            let dataCount = data.totalCount; //총 갯수
+            let dataCount = entity.totalCount; //총 갯수
             let pageCount = dataCount / 20; //총 페이지 갯수
             $('#pagination').twbsPagination({
                 totalPages: pageCount,

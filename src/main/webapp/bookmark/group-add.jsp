@@ -48,7 +48,7 @@
     }
     $.ajax({
       type: 'POST',
-      url: '/bookmark-group',
+      url: '/api/bookmark-group',
       data : JSON.stringify(data),
       contentType: 'application/json; charset=utf-8',
     }).done(function (data){

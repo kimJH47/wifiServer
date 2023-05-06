@@ -107,7 +107,7 @@
         console.log(JSON.stringify(data));
         $.ajax({
             type: 'POST',
-            url: '/bookmark-list',
+            url: '/api/bookmark-list',
             data : JSON.stringify(data),
             contentType: 'application/json; charset=utf-8',
         }).done(function (data){
@@ -120,7 +120,7 @@
     document.addEventListener("DOMContentLoaded", function () {
         $.ajax({
             type: 'GET',
-            url: '/bookmark-group',
+            url: '/api/bookmark-group',
             contentType: 'application/json; charset=utf-8',
         }).done(function (data) {
             let selectBox = $('#bookmark-list');
@@ -137,7 +137,7 @@
         let mgrNo = localStorage.getItem("mgrNo");
         let latitude = localStorage.getItem("latitude");
         let longitude = localStorage.getItem("longitude");
-        let url = '/detail-wifi' +
+        let url = '/api/detail-wifi' +
             "?" + "mgrNo=" + mgrNo + "&" +
             "latitude=" + latitude + "&" +
             "longitude=" + longitude;

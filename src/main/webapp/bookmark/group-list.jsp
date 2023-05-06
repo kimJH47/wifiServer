@@ -51,7 +51,7 @@
     function deleteBookmarkGroup(id) {
         $.ajax({
             type: 'DELETE',
-            url: '/bookmark-group',
+            url: '/api/bookmark-group',
             data: JSON.stringify({
                 id: id
             }),
@@ -75,7 +75,7 @@
         });
         $.ajax({
             type: 'GET',
-            url: '/bookmark-group',
+            url: '/api/bookmark-group',
             contentType: 'application/json; charset=utf-8',
         }).done(function (data) {
             let response = data.entity;

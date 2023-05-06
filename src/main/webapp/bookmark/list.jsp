@@ -44,7 +44,7 @@
         $(document).on("click", "#delete", function () {
             $.ajax({
                 type: 'DELETE',
-                url: '/bookmark-list',
+                url: '/api/bookmark-list',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify({
                     id:$(this).parent().parent().find("td:eq(0)").text()
@@ -55,7 +55,7 @@
         });
         $.ajax({
             type: 'GET',
-            url: '/bookmark-list',
+            url: '/api/bookmark-list',
             contentType: 'application/json; charset=utf-8',
         }).done(function (data) {
             let response = data.entity;

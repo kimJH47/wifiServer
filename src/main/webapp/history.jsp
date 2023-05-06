@@ -53,7 +53,7 @@
             console.log(id);
             $.ajax({
                 type: 'DELETE',
-                url: '/history',
+                url: '/api/history',
                 data : JSON.stringify({
                     id : id
                 }),
@@ -65,19 +65,19 @@
 
         $.ajax({
             type: 'GET',
-            url: '/history',
+            url: '/api/history',
             contentType: 'application/json; charset=utf-8',
         }).done(function (data) {
-            let response = data.entity;
+            let entity = data.entity;
             let str = "";
             console.log(data)
             $("tr:has(td)").remove();
-            $.each(response, function (i) {
+            $.each(entity, function (i) {
                 str += "<TR>"
-                str += '<TD id="id">' + response[i].id + '</TD>'
-                str += '<TD id="latitude">' + response[i].latitude + '</TD>'
-                str += '<TD id="longitude">' + response[i].longitude + '</TD>'
-                str += '<TD id="create-date">' + response[i].createDate + '</TD>'
+                str += '<TD id="id">' + entity[i].id + '</TD>'
+                str += '<TD id="latitude">' + entity[i].latitude + '</TD>'
+                str += '<TD id="longitude">' + entity[i].longitude + '</TD>'
+                str += '<TD id="create-date">' + entity[i].createDate + '</TD>'
                 str += '<TD id="note"><button type="button" class="btn btn-primary" id = "delete" >삭제</button></TD>'
                 str += '</TR>'
             });
