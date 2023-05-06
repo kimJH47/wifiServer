@@ -21,9 +21,4 @@ public class ContentTypeFilter implements Filter {
         response.setContentType("application/json");
         chain.doFilter(request, response);
     }
-
-    @Override
-    public void destroy() {
-        this.destroy();
-    }
 }

@@ -22,9 +22,4 @@ public class CharacterEncodingFilter implements Filter {
         response.setCharacterEncoding("UTF-8");
         chain.doFilter(request, response);
     }
-
-    @Override
-    public void destroy() {
-        this.destroy();
-    }
 }
