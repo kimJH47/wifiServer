@@ -15,7 +15,6 @@ import com.core.wifiserver.client.dto.ResponseEntity;
 import com.core.wifiserver.dao.Page;
 import com.core.wifiserver.dao.WifiInfoDao;
 import com.core.wifiserver.dto.WifiDto;
-import com.core.wifiserver.dto.request.Request;
 import com.core.wifiserver.dto.request.WifiSearchRequest;
 import com.core.wifiserver.dto.response.WifiPaginationEntity;
 import java.util.ArrayList;
@@ -75,8 +74,7 @@ class PublicWifiSearchServiceTest {
         given(wifiInfoDao.findOrderByCoordinateWithPagination(anyDouble(), anyDouble(), any(Page.class)))
                 .willReturn(wifiInfoDto);
         //when
-        WifiPaginationEntity entity = publicWifiSearchService.findOrderByCoordinateWithPagination(
-                new Request<>(wifiSearchRequest));
+        WifiPaginationEntity entity = publicWifiSearchService.findOrderByCoordinateWithPagination(wifiSearchRequest);
         //then
         then(wifiInfoDao).should(times(1)).findOrderByCoordinateWithPagination
                 (anyDouble(), anyDouble(), any(Page.class));
