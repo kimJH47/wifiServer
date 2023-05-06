@@ -26,6 +26,7 @@ public class ServletUtils {
     }
 
     public static void createFailResponse(HttpServletResponse httpServletResponse, Exception e) throws IOException {
+        httpServletResponse.setStatus(500);
         httpServletResponse.getWriter().print(
                 new Gson().toJson(Response.builder()
                         .statusCode(StatusCode.FAIL)
