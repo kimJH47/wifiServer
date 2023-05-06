@@ -1,4 +1,4 @@
-package com.core.wifiserver.dao;
+package com.core.wifiserver.dto;
 
 
 import lombok.AllArgsConstructor;

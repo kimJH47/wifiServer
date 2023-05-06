@@ -12,7 +12,7 @@ import static org.mockito.Mockito.times;
 
 import com.core.wifiserver.client.SeoulPublicWifiClient;
 import com.core.wifiserver.client.dto.ResponseEntity;
-import com.core.wifiserver.dao.Page;
+import com.core.wifiserver.dto.Page;
 import com.core.wifiserver.dao.WifiInfoDao;
 import com.core.wifiserver.dto.WifiDto;
 import com.core.wifiserver.dto.request.WifiSearchRequest;

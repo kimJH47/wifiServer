@@ -1,6 +1,6 @@
 package com.core.wifiserver.dto.request;
 
-import com.core.wifiserver.dao.Page;
+import com.core.wifiserver.dto.Page;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

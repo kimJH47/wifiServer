@@ -3,6 +3,7 @@ package com.core.wifiserver.dao;
 import com.core.wifiserver.client.dto.clientResponseDto;
 import com.core.wifiserver.dao.queryfactory.QueryBuilderFactory;
 import com.core.wifiserver.dao.template.JdbcContext;
+import com.core.wifiserver.dto.Page;
 import com.core.wifiserver.dto.WifiDto;
 import java.sql.ResultSet;
 import java.sql.SQLException;
