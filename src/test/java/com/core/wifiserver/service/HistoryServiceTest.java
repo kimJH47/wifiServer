@@ -38,7 +38,7 @@ class HistoryServiceTest {
         given(historyDao.save(anyDouble(), anyDouble())).willReturn(expected);
         Request<HistoryRequest> request = new Request<>(new HistoryRequest(40.3, 30.134));
         //when
-        Integer actual = historyService.save(request).getEntity();
+        Integer actual = historyService.save(request);
         //then
         then(historyDao).should(times(1)).save(anyDouble(), anyDouble());
         assertThat(actual).isEqualTo(expected);
@@ -51,7 +51,7 @@ class HistoryServiceTest {
         int expected = 1;
         given(historyDao.delete(anyInt())).willReturn(expected);
         //when
-        Integer actual = historyService.delete(expected).getEntity();
+        Integer actual = historyService.delete(expected);
         //then
         then(historyDao).should(times(1)).delete(anyInt());
         assertThat(actual).isEqualTo(expected);
@@ -67,7 +67,8 @@ class HistoryServiceTest {
         expected.add(new HistoryDto(3, 32.20, 120.123, LocalDateTime.now().toString()));
         given(historyDao.findAll()).willReturn(expected);
         //when
-        List<HistoryDto> actual = historyService.findAll().getEntity();
+        List<HistoryDto> actual = historyService.findAll();
+
         //then
         then(historyDao).should(times(1)).findAll();
         assertThat(actual).hasSize(expected.size());

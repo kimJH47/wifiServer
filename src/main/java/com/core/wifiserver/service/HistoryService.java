@@ -2,10 +2,8 @@ package com.core.wifiserver.service;
 
 import com.core.wifiserver.dao.HistoryDao;
 import com.core.wifiserver.dto.HistoryDto;
-import com.core.wifiserver.dto.StatusCode;
 import com.core.wifiserver.dto.request.HistoryRequest;
 import com.core.wifiserver.dto.request.Request;
-import com.core.wifiserver.dto.response.Response;
 import java.util.List;
 
 public class HistoryService {
@@ -15,26 +13,17 @@ public class HistoryService {
         this.historyDao = historyDao;
     }
 
-    public Response<Integer> save(Request<HistoryRequest> historyRequestRequest) {
-        return Response.<Integer>builder()
-                .statusCode(StatusCode.SUCCESS)
-                .entity(historyDao.save(historyRequestRequest.getEntity().getLatitude(),
-                        historyRequestRequest.getEntity().getLongitude()))
-                .build();
+    public Integer save(Request<HistoryRequest> historyRequestRequest) {
+        return historyDao.save(historyRequestRequest.getEntity().getLatitude(),
+                historyRequestRequest.getEntity().getLongitude());
 
     }
 
-    public Response<Integer> delete(int id) {
-        return Response.<Integer>builder()
-                .statusCode(StatusCode.SUCCESS)
-                .entity(historyDao.delete(id))
-                .build();
+    public Integer delete(int id) {
+        return historyDao.delete(id);
     }
 
-    public Response<List<HistoryDto>> findAll() {
-        return Response.<List<HistoryDto>>builder()
-                .statusCode(StatusCode.SUCCESS)
-                .entity(historyDao.findAll())
-                .build();
+    public List<HistoryDto> findAll() {
+        return historyDao.findAll();
     }
 }
