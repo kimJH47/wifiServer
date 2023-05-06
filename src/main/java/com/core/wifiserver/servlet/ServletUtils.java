@@ -21,13 +21,13 @@ public class ServletUtils {
     }
 
     public static <T> String entityToResponseJson(T entity) {
-        return new Gson().toJson(Response.builder()
+        return new Gson().toJson(Response.<T>builder()
                 .entity(entity)
                 .build());
     }
 
     public static void createFailResponse(HttpServletResponse httpServletResponse, Exception e) throws IOException {
-        httpServletResponse.setStatus(500);
+        httpServletResponse.setStatus(400);
         httpServletResponse.getWriter().print(
                 new Gson().toJson(Response.builder()
                         .entity(e.getMessage())
