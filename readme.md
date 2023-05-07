@@ -1,3 +1,9 @@
+## STACK ##
+- java 8
+- tomcat 8.5
+- servlet 4.0
+- jdbc
+
 # Contents #
 
 - [Application Architecture](#application-architecture)
