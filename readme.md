@@ -7,7 +7,7 @@
 ----------------------------------------
 
 # Application Architecture #
-![system architecture](./doc/architecture.png)
+![system architecture](./doc/architecture.PNG)
 # Flow Chart #
 
 #### 공공 와이파이 불러오기
