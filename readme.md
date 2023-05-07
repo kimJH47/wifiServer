@@ -433,7 +433,7 @@ Content-Type: application/json
  
 {
     "name": "list1",
-    "order": "1"
+    "orders": 1
 }
 ```
 
@@ -454,7 +454,7 @@ Content-Type: application/json
 {   
     "id" : 1,
     "name": "list1-1",
-    "order": "3"
+    "orders": 3
 }
 ```
 
