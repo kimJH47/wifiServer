@@ -341,7 +341,7 @@ Content-Type: application/json
 `longitude` : 경도<br>
 
 ``` http
-GET /detail-wifi?mgrNo=SC22180001&longitude=120&latitude=30.55 HTTP/1.1
+GET /api//detail-wifi?mgrNo=SC22180001&longitude=120&latitude=30.55 HTTP/1.1
 ```
 
 ```http
@@ -374,7 +374,7 @@ Content-Type: application/json
 ### 히스토리 저장 ###
 
 ``` http
-POST /history HTTP/1.1
+POST /api//history HTTP/1.1
 Content-Type: application/json
  
 {
@@ -394,7 +394,7 @@ HTTP/1.1 200 OK
 ### 히스토리 전체 조회 ###
 
 ``` http
-GET /history HTTP/1.1
+GET /api//history HTTP/1.1
 ```
 
 ``` http
@@ -416,7 +416,7 @@ HTTP/1.1 200 OK
 ### 히스토리 삭제 ###
 
 ``` http
-DELETE /history HTTP/1.1
+DELETE /api//history HTTP/1.1
 Content-Type: application/json
 
 {
@@ -435,7 +435,7 @@ HTTP/1.1 200 OK
 ### 북마크 그룹 저장 ###
 
 ``` http
-POST /bookmark-group HTTP/1.1
+POST /api/bookmark-group HTTP/1.1
 Content-Type: application/json
  
 {
@@ -455,7 +455,7 @@ HTTP/1.1 200 OK
 ### 북마크 그룹 업데이트 ###
 
 ``` http
-POST /update-bookmark-group HTTP/1.1
+POST /api/update-bookmark-group HTTP/1.1
 Content-Type: application/json
  
 {   
@@ -476,7 +476,7 @@ HTTP/1.1 200 OK
 ### 북마크 그룹 조회 ###
 
 ``` http
-GET /bookmark-group HTTP/1.1
+GET /api/bookmark-group HTTP/1.1
 ```
 
 ``` http
@@ -506,7 +506,7 @@ HTTP/1.1 200 OK
 ### 북마크 그룹 삭제 ###
 
 ``` http
-DELETE /bookmark-group HTTP/1.1
+DELETE /api/bookmark-group HTTP/1.1
 Content-Type: application/json
 
 {
@@ -525,7 +525,7 @@ HTTP/1.1 200 OK
 ### 북마크 저장 ###
 
 ``` http
-POST /bookmark-list HTTP/1.1
+POST /api/bookmark-list HTTP/1.1
 Content-Type: application/json
  
 {
@@ -545,7 +545,7 @@ HTTP/1.1 200 OK
 ### 북마크 조회 ###
 
 ``` http
-GET /bookmark-list HTTP/1.1
+GET /api/bookmark-list HTTP/1.1
 ```
 
 ``` http
@@ -573,7 +573,7 @@ HTTP/1.1 200 OK
 ### 북마크 삭제 ###
 
 ``` http
-DELETE /bookmark-list HTTP/1.1
+DELETE /api/bookmark-list HTTP/1.1
 Content-Type: application/json
 
 {
