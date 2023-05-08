@@ -341,7 +341,7 @@ Content-Type: application/json
 `longitude` : 경도<br>
 
 ``` http
-GET /api//detail-wifi?mgrNo=SC22180001&longitude=120&latitude=30.55 HTTP/1.1
+GET /api/detail-wifi?mgrNo=SC22180001&longitude=120&latitude=30.55 HTTP/1.1
 ```
 
 ```http
@@ -374,7 +374,7 @@ Content-Type: application/json
 ### 히스토리 저장 ###
 
 ``` http
-POST /api//history HTTP/1.1
+POST /api/history HTTP/1.1
 Content-Type: application/json
  
 {
@@ -394,7 +394,7 @@ HTTP/1.1 200 OK
 ### 히스토리 전체 조회 ###
 
 ``` http
-GET /api//history HTTP/1.1
+GET /api/history HTTP/1.1
 ```
 
 ``` http
@@ -416,7 +416,7 @@ HTTP/1.1 200 OK
 ### 히스토리 삭제 ###
 
 ``` http
-DELETE /api//history HTTP/1.1
+DELETE /api/history HTTP/1.1
 Content-Type: application/json
 
 {
